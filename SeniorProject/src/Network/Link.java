@@ -17,4 +17,12 @@ public class Link {
         this.secondNode = secondNode;
         this.linkLength = length;
     }
+
+    public long getLinkLength() {
+        return linkLength;
+    }
+
+    public void setLinkLength(long linkLength) {
+        this.linkLength = linkLength;
+    }
 }

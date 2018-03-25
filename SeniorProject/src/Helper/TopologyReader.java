@@ -9,11 +9,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class TolopogyReader {
+public class TopologyReader {
     String fileName;
     Simulator simulator;
 
-    public TolopogyReader(String fileName, Simulator sim) {
+    public TopologyReader(String fileName, Simulator sim) {
         this.fileName = fileName;
         this.simulator = sim;
         buildTopology();
@@ -44,7 +44,8 @@ public class TolopogyReader {
                 snode = reader.next();
                 lenght = reader.nextInt();
 
-                if(!nodenames.contains(fnode) && !nodenames.isEmpty()) {
+                if(!nodenames.contains(fnode)) {
+                    nodenames.add(fnode);
                     first = new Node(nid++, fnode);
                     nodes.add(first);
                     simulator.networkNodes.put(first.getID(), first);
@@ -52,19 +53,18 @@ public class TolopogyReader {
                     first = nodes.get(nodenames.indexOf(fnode));
                 }
 
-                if(!nodenames.contains(snode) && !nodenames.isEmpty()) {
+                if(!nodenames.contains(snode)) {
+                    nodenames.add(snode);
                     second = new Node(nid++, snode);
                     nodes.add(second);
                     simulator.networkNodes.put(second.getID(), second);
                 } else {
                     second = nodes.get(nodenames.indexOf(snode));
                 }
-                Pair<Integer,Integer> anan = new Pair<>(first.getID(), second.getID());
-                simulator.newtworkLinks.put(anan, new Link(eid++, first, second,lenght));
+                Pair<Integer,Integer> edgePair = new Pair<>(first.getID(), second.getID());
+                //System.out.println(edgePair.getLeft() + " " + edgePair.getRight());
+                simulator.newtworkLinks.put(edgePair, new Link(eid++, first, second,lenght));
             }
-
-
-
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
