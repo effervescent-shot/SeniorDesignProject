@@ -7,8 +7,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Simulator {
-    Map<Integer, Node> networkNodes = new HashMap();
-    Map<Pair<Integer, Integer>, Link> newtworkLinks = new HashMap();
+    public static Map<Integer, Node> networkNodes = new HashMap();
+    public static Map<Pair<Integer, Integer>, Link> newtworkLinks = new HashMap();
+
+    public Simulator() {
+
+    }
+
+
 
 
 
