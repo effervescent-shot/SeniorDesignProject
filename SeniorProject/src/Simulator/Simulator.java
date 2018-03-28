@@ -20,7 +20,9 @@ public class Simulator {
     }
 
     public void RunDijkstra(){
-        routingAlgorithm.runDijkstra(networkNodes.get(0));
+        for (Node n: networkNodes.values()) {
+            routingAlgorithm.runDijkstra(n);
+        }
     }
 
 

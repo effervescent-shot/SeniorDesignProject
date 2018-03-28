@@ -11,9 +11,9 @@ import java.util.*;
 public class RoutingAlgorithm {
 
     public Map<Integer, GraphNode> graphNodes = new HashMap();  //same ID with the original node
-    int [] path1Distance;
-    int [] path2Distance;
-    int [] path3Distance;
+    double [] path1Distance;
+    double [] path2Distance;
+    double [] path3Distance;
     int [] path1Previous;
     int [] path2Previous;
     int [] path3Previous;
@@ -38,9 +38,9 @@ public class RoutingAlgorithm {
         heap.add(root);
 
         //**********INITIALIZE*********//
-        path1Distance = new int[graphNodes.size()];
-        path2Distance = new int[graphNodes.size()];
-        path3Distance = new int[graphNodes.size()];
+        path1Distance = new double[graphNodes.size()];
+        path2Distance = new double[graphNodes.size()];
+        path3Distance = new double[graphNodes.size()];
 
         path1Previous = new int[graphNodes.size()];
         path2Previous = new int[graphNodes.size()];
@@ -51,9 +51,9 @@ public class RoutingAlgorithm {
         levelThreeVisitedNodes = new int[graphNodes.size()];
 
         for(int k =0 ; k<graphNodes.size(); k++) {
-            path1Distance[k]= Integer.MAX_VALUE;
-            path2Distance[k]= Integer.MAX_VALUE;
-            path3Distance[k]= Integer.MAX_VALUE;
+            path1Distance[k]= Double.MAX_VALUE;
+            path2Distance[k]= Double.MAX_VALUE;
+            path3Distance[k]= Double.MAX_VALUE;
             path1Previous[k]= -1;
             path2Previous[k]= -1;
             path3Previous[k]= -1;
@@ -76,7 +76,7 @@ public class RoutingAlgorithm {
                 //For each edge of current node
                 for (Link e: currentNode.interfaces ) {
                     //New distance to neighbors which is passing through the current node
-                    int dist = (currentNode.dijDist + e.getCapacity());
+                    double dist = (currentNode.dijDist + e.getCost());
                     //Check if the current node was reached via the current edge e
                     //If so, do not compare distance because it includes a loop
                     if(currentNode.dijPrev != e.getSecondNode().getID()) {
@@ -130,7 +130,7 @@ public class RoutingAlgorithm {
 
         System.out.println("Path1: "+ Arrays.toString(path1Distance) + "\n" +
                 "Path2: "+ Arrays.toString(path2Distance) + "\n" +
-                "Path3: "+ Arrays.toString(path3Distance));
+                "Path3: "+ Arrays.toString(path3Distance) + "\n");
 
 
 
@@ -141,7 +141,7 @@ public class RoutingAlgorithm {
 
     private class GraphNode implements Comparable {
         int ID;
-        int dijDist = 0;
+        double dijDist = 0;
         int dijPrev = 0;
         int dijLevel =0;
         ArrayList<Integer> neighbours = new ArrayList<>(); // Keeps all incoming and outgoing channels information
@@ -154,7 +154,7 @@ public class RoutingAlgorithm {
         }
 
         //copy constructor to be used in 3th degree dijsktra algorithm
-        public GraphNode(GraphNode n, int newDijDist, int newDijPrev, int newDijLevel) {
+        public GraphNode(GraphNode n, double newDijDist, int newDijPrev, int newDijLevel) {
             this.ID = n.ID;
             this.dijDist =  newDijDist;
             this.dijPrev = newDijPrev;

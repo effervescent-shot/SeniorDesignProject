@@ -5,10 +5,12 @@ public class Link {
     private Node firstNode;
     private Node secondNode;
     private int capacity; // in Mbps
+    private double cost;
 
     public Link(int ID, int capacity) {
         this.ID = ID;
         this.capacity = capacity;
+        this.cost = 100/capacity;
     }
 
 
@@ -17,6 +19,11 @@ public class Link {
         this.firstNode = firstNode;
         this.secondNode = secondNode;
         this.capacity = capacity;
+        this.cost = 100/capacity;
+    }
+
+    public double getCost() {
+        return cost;
     }
 
     public int getCapacity() {

@@ -1,5 +1,7 @@
 package Helper;
 
+import Simulator.Simulator;
+
 import java.util.ArrayList;
 
 public class Path {
@@ -9,16 +11,17 @@ public class Path {
     public Path(){
 
     }
-    public Path(double cost,ArrayList<Integer> path){
-        this.cost=cost;
+    public Path(ArrayList<Integer> path){
         this.path=path;
+        cost = calculateCost();
     }
 
     public void setReverse(){
         ArrayList<Integer> reversePath= new ArrayList<Integer>();
         for(int i = path.size(); i>0;i--){
-            
+            reversePath.add(path.get(i-1));
         }
+        this.path= reversePath;
     }
 
 
@@ -43,6 +46,21 @@ public class Path {
 
     public void setPath(ArrayList<Integer> path) {
         this.path = path;
+    }
+
+    public double calculateCost() {
+        int firstID = 0;
+        int secondID = 0;
+        int sum=0;
+        Pair<Integer,Integer> p;
+        for(int i =0; i< path.size()-1; i++){
+            firstID = path.get(i);
+            secondID = path.get(i+1);
+            p = new Pair<>(firstID,secondID);
+            sum+= Simulator.newtworkLinks.get(p).getCost();
+        }
+
+        return cost;
     }
 
     @Override
