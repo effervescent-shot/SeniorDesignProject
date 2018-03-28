@@ -22,4 +22,8 @@ public class Pair<L,R> {
         return this.left.equals(pairo.getLeft()) &&
                 this.right.equals(pairo.getRight());
     }
+
+    public String to_String() {
+        return "First: "+ this.left+ " Second: " + this.right ;
+    }
 }

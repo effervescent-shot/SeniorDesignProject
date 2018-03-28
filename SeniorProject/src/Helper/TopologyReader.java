@@ -31,7 +31,7 @@ public class TopologyReader {
             int fn = 0;
             int sn = 0;
             int lenght = 0;
-            int nid = 10000;  //nodeID
+            int nid = 0; //10000;  //nodeID
             int eid = 1000;   //edgeID
             Node first;
             Node second;
@@ -68,6 +68,7 @@ public class TopologyReader {
                 simulator.newtworkLinks.put(edgePair2, new Link(eid++, second, first,lenght));
 
             }
+            simulator.routingAlgorithm.constructGraphNodes(simulator.networkNodes);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -6,9 +6,9 @@ public class Main {
         Simulator sim = new Simulator();
         TopologyReader tr = new TopologyReader("input.txt",sim);
 
-        Pair<Integer,Integer> p1 = new Pair<>(10000,10002);
-        Pair<Integer,Integer> p2 = new Pair<>(10001,10002);
-        Pair<Integer,Integer> p3 = new Pair<>(10001,10000);
+        Pair<Integer,Integer> p1 = new Pair<>(0,1);
+        Pair<Integer,Integer> p2 = new Pair<>(1,2);
+        Pair<Integer,Integer> p3 = new Pair<>(2,0);
 
         System.out.println(sim.newtworkLinks.get(p1).getLinkLength());
         System.out.println(sim.newtworkLinks.get(p2).getLinkLength());
