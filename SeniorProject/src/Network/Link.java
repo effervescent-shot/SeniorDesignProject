@@ -19,11 +19,11 @@ public class Link {
         this.capacity = capacity;
     }
 
-    public long getLinkLength() {
+    public int getCapacity() {
         return capacity;
     }
 
-    public void setLinkLength(int capacity) {
+    public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
