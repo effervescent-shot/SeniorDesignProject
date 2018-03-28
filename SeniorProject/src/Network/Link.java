@@ -4,25 +4,34 @@ public class Link {
     private int ID;
     private Node firstNode;
     private Node secondNode;
-    private long linkLength; //in meter
+    private int capacity; // in Mbps
 
-    public Link(int ID, int length) {
+    public Link(int ID, int capacity) {
         this.ID = ID;
-        this.linkLength = length;
+        this.capacity = capacity;
     }
 
-    public Link(int ID, Node firstNode, Node secondNode, int length) {
+
+    public Link(int ID, Node firstNode, Node secondNode, int capacity) {
         this.ID = ID;
         this.firstNode = firstNode;
         this.secondNode = secondNode;
-        this.linkLength = length;
+        this.capacity = capacity;
     }
 
     public long getLinkLength() {
-        return linkLength;
+        return capacity;
     }
 
-    public void setLinkLength(long linkLength) {
-        this.linkLength = linkLength;
+    public void setLinkLength(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public Node getFirstNode(){
+        return this.firstNode;
+    }
+
+    public Node getSecondNode(){
+        return this.secondNode;
     }
 }

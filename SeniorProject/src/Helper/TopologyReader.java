@@ -31,8 +31,8 @@ public class TopologyReader {
             int fn = 0;
             int sn = 0;
             int lenght = 0;
-            int nid = 10000;
-            int eid = 1000;
+            int nid = 10000;  //nodeID
+            int eid = 1000;   //edgeID
             Node first;
             Node second;
 
@@ -61,9 +61,12 @@ public class TopologyReader {
                 } else {
                     second = nodes.get(nodenames.indexOf(snode));
                 }
-                Pair<Integer,Integer> edgePair = new Pair<>(first.getID(), second.getID());
+                Pair<Integer,Integer> edgePair1 = new Pair<>(first.getID(), second.getID());
+                Pair<Integer,Integer> edgePair2 = new Pair<>(second.getID(), first.getID());
                 //System.out.println(edgePair.getLeft() + " " + edgePair.getRight());
-                simulator.newtworkLinks.put(edgePair, new Link(eid++, first, second,lenght));
+                simulator.newtworkLinks.put(edgePair1, new Link(eid++, first, second,lenght));
+                simulator.newtworkLinks.put(edgePair2, new Link(eid++, second, first,lenght));
+
             }
 
         } catch (FileNotFoundException e) {
