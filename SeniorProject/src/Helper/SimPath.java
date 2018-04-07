@@ -4,14 +4,16 @@ import Simulator.Simulator;
 
 import java.util.ArrayList;
 
-public class Path {
+public class SimPath {
     private double cost;
-    private ArrayList<Integer> path = new ArrayList<Integer>();
+    private ArrayList<Integer> path; // = new ArrayList<Integer>();
 
-    public Path(){
-
+    public SimPath(){
+        path = new ArrayList<>();
     }
-    public Path(ArrayList<Integer> path){
+
+
+    public SimPath(ArrayList<Integer> path){
         this.path=path;
         cost = calculateCost();
     }
@@ -63,13 +65,17 @@ public class Path {
         return cost;
     }
 
+    public void addPath(int nodeID) {
+        this.path.add(nodeID);
+    }
+
     @Override
     public String toString() {
-        String s="Path{" +
+        String s="SimPath{" +
                 "cost=" + cost + ", path=[" ;
 
         for (int i : path){
-            s+=i+"/t";
+            s+=i+"\t";
         }
          s+= path + "]}";
         return s;

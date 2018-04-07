@@ -1,11 +1,10 @@
 package Simulator;
 
 import Helper.Pair;
+import Helper.SimPath;
 import Network.Link;
 import Network.Node;
-import org.omg.CORBA.INITIALIZE;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class RoutingAlgorithm {
@@ -21,6 +20,8 @@ public class RoutingAlgorithm {
     int [] levelTwoVisitedNodes;
     int [] levelThreeVisitedNodes;
 
+    SimPath p1, p2, p3;
+
     public void RoutingAlgorithm(){
 
     }
@@ -31,9 +32,9 @@ public class RoutingAlgorithm {
         }
     }
 
-    public void runDijkstra (Node initialCode) {
+    public void runDijkstra (Node initialNode) {
         PriorityQueue <GraphNode>heap = new PriorityQueue<GraphNode>(); //Holds next node which has the minimum distance
-        GraphNode root = graphNodes.get(initialCode.getID()); //root node which 3-path dijsktra runs
+        GraphNode root = graphNodes.get(initialNode.getID()); //root node which 3-path dijsktra runs
         GraphNode currentNode; //The node that is being examined
         heap.add(root);
 
@@ -72,7 +73,7 @@ public class RoutingAlgorithm {
         while(!heap.isEmpty()) {
             currentNode = heap.poll();
             //A node can be visited at most 3 times while dijsktra-3 running
-            if(levelOneVisitedNodes[currentNode.ID]==0 || levelTwoVisitedNodes[currentNode.ID]==0 || levelThreeVisitedNodes[currentNode.ID]==0) {
+            //if(levelOneVisitedNodes[currentNode.ID]==0 || levelTwoVisitedNodes[currentNode.ID]==0 || levelThreeVisitedNodes[currentNode.ID]==0) {
                 //For each edge of current node
                 for (Link e: currentNode.interfaces ) {
                     //New distance to neighbors which is passing through the current node
@@ -84,7 +85,7 @@ public class RoutingAlgorithm {
                         if(dist < path1Distance[e.getSecondNode().getID()]) {
                             if(path1Previous[e.getSecondNode().getID()]!=-1) {
                                 //If there exist a previously calculated value then shift the path informations
-                                //Path 2 Info to Path 3 and Path 1 Info to Path 2
+                                //SimPath 2 Info to SimPath 3 and SimPath 1 Info to SimPath 2
                                 path3Distance[e.getSecondNode().getID()]= path2Distance[e.getSecondNode().getID()];
                                 path3Previous[e.getSecondNode().getID()]= path2Previous[e.getSecondNode().getID()];
                                 path2Distance[e.getSecondNode().getID()]= path1Distance[e.getSecondNode().getID()];
@@ -98,7 +99,7 @@ public class RoutingAlgorithm {
                         else if(dist < path2Distance[e.getSecondNode().getID()]) {
                             if(path2Previous[e.getSecondNode().getID()]!=-1) {
                                 //If there exist a previously calculated value then shift the path informations
-                                //Path 2 Info to Path 3
+                                //SimPath 2 Info to SimPath 3
                                 path3Distance[e.getSecondNode().getID()]= path2Distance[e.getSecondNode().getID()];
                                 path3Previous[e.getSecondNode().getID()]= path2Previous[e.getSecondNode().getID()];
                             }
@@ -114,29 +115,70 @@ public class RoutingAlgorithm {
                         }
                     }
                 }
-            }
-            if(currentNode.dijLevel == 0 || currentNode.dijLevel==1) {
-                levelOneVisitedNodes[currentNode.ID]+=1;
-            } else if(currentNode.dijLevel == 2) {
-                levelTwoVisitedNodes[currentNode.ID]+=1;
-            } else {
-                levelThreeVisitedNodes[currentNode.ID]+=1;
-            }
+            //}
+
+//            if(currentNode.dijLevel == 0) {
+//                currentNode.dijLevel=1;
+//                levelOneVisitedNodes[currentNode.ID]+=1;
+//            }
+//            if( currentNode.dijLevel==1) {
+//                currentNode.dijLevel=2;
+//                levelTwoVisitedNodes[currentNode.ID]+=1;
+//            } else if(currentNode.dijLevel == 2) {
+//                currentNode.dijLevel=3;
+//                levelThreeVisitedNodes[currentNode.ID]+=1;
+//            } else {
+//                levelThreeVisitedNodes[currentNode.ID]+=1;
+//            }
         }
 
-        System.out.println("Path1: "+ Arrays.toString(path1Previous) + "\n" +
+        System.out.println("Initial Node: " + initialNode.getID()+ "\n" +
+                           "Path1: "+ Arrays.toString(path1Previous) + "\n" +
                            "Path2: "+ Arrays.toString(path2Previous) + "\n" +
                            "Path3: "+ Arrays.toString(path3Previous) + "\n");
 
-        System.out.println("Path1: "+ Arrays.toString(path1Distance) + "\n" +
+        System.out.println("DISTANCES:\n"+"Path1: "+ Arrays.toString(path1Distance) + "\n" +
                 "Path2: "+ Arrays.toString(path2Distance) + "\n" +
                 "Path3: "+ Arrays.toString(path3Distance) + "\n");
 
+//        p1 = new SimPath();
+//
+//        levelOnePathBuild(initialNode.getID(),0, p1);  /// her nodedan node0a
+//        System.out.println(Arrays.toString(p1.getSimPath().toArray()));
+    }
 
+    public void kPathDijkstra (Node initialNode){
 
     }
 
 
+    public void levelOnePathBuild(int initial, int nodeID, SimPath simPath) {
+        simPath.addPath(nodeID);
+        int prev = path1Previous[nodeID];
+        if(prev != initial) {
+            levelOnePathBuild(initial,prev, simPath);
+        } else {
+            simPath.addPath(initial);
+            simPath.setReverse();
+        }
+    }
+
+    public void levelTwoPathBuild(int initial, int nodeID, SimPath simPath){
+        simPath.addPath(nodeID);
+        int prev = path2Previous[nodeID];
+        double dist=0;
+        if(prev != initial) {
+            dist = path2Distance[nodeID]-Simulator.newtworkLinks.get(new Pair(nodeID,prev)).getCost();
+            if(dist < path2Distance[prev]){
+                levelOnePathBuild(initial,prev, simPath);
+            } else if(dist == path2Distance[prev]) {
+                levelTwoPathBuild(initial, prev, simPath);
+            }
+        } else {
+            simPath.addPath(initial);
+            simPath.setReverse();
+        }
+    }
 
 
     private class GraphNode implements Comparable {
@@ -189,10 +231,9 @@ public class RoutingAlgorithm {
             for(int i=0; i< neighbours.size(); i++){
                 keyPair = new Pair<>(this.ID,neighbours.get(i));
                 interfaces.add(Simulator.newtworkLinks.get(keyPair));
+            }
         }
-    }
 
-;
     }
 
 }

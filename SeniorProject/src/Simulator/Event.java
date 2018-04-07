@@ -62,6 +62,6 @@ public class Event implements Comparable {
     public String toString() {
         return "Event type: "+this.eventType+ " at time "+ this.time + " and the packet is " + this.packet.getPacketType() + "\n"
                 +this.packet.getSourceNodeID()+"-"+this.packet.getDestinationNodeID()+"\n"
-                +this.packet.getPath().toString() +"\n";
+                +this.packet.getSimPath().toString() +"\n";
     }
 }

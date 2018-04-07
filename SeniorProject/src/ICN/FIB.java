@@ -1,28 +1,81 @@
 package ICN;
 
-import Helper.Path;
+import Helper.SimPath;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class FIB {
     public class FIBRow {
-        private Path firstPath;
-        private Path secondPath;
-        private Path thirdPath;
+        private SimPath firstSimPath;
+        private SimPath secondSimPath;
+        private SimPath thirdSimPath;
 
         public FIBRow() {
-            firstPath = new Path();
-            secondPath = new Path();
-            thirdPath = new Path();
+            firstSimPath = new SimPath();
+            secondSimPath = new SimPath();
+            thirdSimPath = new SimPath();
         }
 
-        public FIBRow(Path p1, Path p2, Path p3) {
-            this.firstPath = p1;
-            this.secondPath = p2;
-            this.thirdPath = p3;
+        public FIBRow(SimPath p1, SimPath p2, SimPath p3) {
+            this.firstSimPath = p1;
+            this.secondSimPath = p2;
+            this.thirdSimPath = p3;
+        }
+
+        public SimPath getFirstSimPath() {
+            return firstSimPath;
+        }
+
+        public void setFirstSimPath(SimPath firstSimPath) {
+            this.firstSimPath = firstSimPath;
+        }
+
+        public SimPath getSecondSimPath() {
+            return secondSimPath;
+        }
+
+        public void setSecondSimPath(SimPath secondSimPath) {
+            this.secondSimPath = secondSimPath;
+        }
+
+        public SimPath getThirdSimPath() {
+            return thirdSimPath;
+        }
+
+        public void setThirdSimPath(SimPath thirdSimPath) {
+            this.thirdSimPath = thirdSimPath;
         }
     }
+
     Map<Integer,FIBRow> forwardingTable = new HashMap<Integer,FIBRow>();
 
+    public FIBRow row;
+    public FIB(int nodeID) {
+        row = new FIBRow();
+        forwardingTable.put(nodeID, row);
+    }
+
+    public void addFIBEntry(int nodeID, FIBRow fibRow) {
+        forwardingTable.put(nodeID, fibRow);
+    }
+
+    public void alterFIBRowPath(int nodeID, int pathID, SimPath newSimPath){
+        if(!forwardingTable.containsKey(nodeID)){
+            return;
+        }
+        FIBRow fr = forwardingTable.get(nodeID);
+        switch (pathID) {
+            case 1:
+                fr.setFirstSimPath(newSimPath);
+                break;
+            case 2:
+                fr.setSecondSimPath(newSimPath);
+                break;
+            case 3:
+                fr.setThirdSimPath(newSimPath);
+                break;
+        }
+        forwardingTable.put(nodeID,fr);
+    }
 }

@@ -1,7 +1,7 @@
 package Network;
 
 import Enums.PacketType;
-import Helper.Path;
+import Helper.SimPath;
 import ICN.Data;
 
 public class Packet {
@@ -9,7 +9,7 @@ public class Packet {
     private int sourceNodeID;
     private int destinationNodeID;
     private Data data;
-    private Path path;
+    private SimPath simPath;
     private PacketType packetType;
 
     public long getID() {
@@ -44,12 +44,12 @@ public class Packet {
         this.data = data;
     }
 
-    public Path getPath() {
-        return path;
+    public SimPath getSimPath() {
+        return simPath;
     }
 
-    public void setPath(Path path) {
-        this.path = path;
+    public void setSimPath(SimPath simPath) {
+        this.simPath = simPath;
     }
 
     public PacketType getPacketType() {

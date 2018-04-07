@@ -46,7 +46,7 @@ public class TopologyReader {
 
                 if(!nodenames.contains(fnode)) {
                     nodenames.add(fnode);
-                    first = new Node(nid++, fnode);
+                    first = new Node(Integer.parseInt(fnode.substring(4,fnode.length())), fnode);
                     nodes.add(first);
                     simulator.networkNodes.put(first.getID(), first);
                 } else {
@@ -55,7 +55,7 @@ public class TopologyReader {
 
                 if(!nodenames.contains(snode)) {
                     nodenames.add(snode);
-                    second = new Node(nid++, snode);
+                    second = new Node(Integer.parseInt(snode.substring(4,snode.length())), snode);
                     nodes.add(second);
                     simulator.networkNodes.put(second.getID(), second);
                 } else {

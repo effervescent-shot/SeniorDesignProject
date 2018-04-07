@@ -15,6 +15,10 @@ public class Pair<L,R> {
     @Override
     public int hashCode() { return left.hashCode() ^ right.hashCode(); }
 
+    public static boolean same(Object o1, Object o2) {
+        return o1 == null ? o2 == null : o1.equals(o2);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Pair)) return false;
