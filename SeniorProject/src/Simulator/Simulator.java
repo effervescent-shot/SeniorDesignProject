@@ -37,9 +37,6 @@ public class Simulator {
 
         YenTopKShortestPathsAlg yenAlg = new YenTopKShortestPathsAlg(graph);
 
-
-
-
         for (Node n: networkNodes.values()) {
             for (Node m: networkNodes.values()) {
                 if(n.getID() != m.getID()){
@@ -49,16 +46,15 @@ public class Simulator {
                 }
             }
         }
+        networkNodes.get(0).getFib().FIB_toString();
     }
 
     public void addPath(List<Path> paths, int source, int target ) {
         Node n = networkNodes.get(source);
-        SimPath path1 = new SimPath(paths.get(0).getPathList());
-        SimPath path2 = new SimPath(paths.get(1).getPathList());
-        SimPath path3 = new SimPath(paths.get(2).getPathList());
-        n.setFibRow(target, 1 , path1);
-        n.setFibRow(target, 2 , path2);
-        n.setFibRow(target, 3 , path3);
+        SimPath path1 = new SimPath(paths.get(0).getPathList(), paths.get(0).getWeight());
+        SimPath path2 = new SimPath(paths.get(1).getPathList(),paths.get(1).getWeight());
+        SimPath path3 = new SimPath(paths.get(2).getPathList(), paths.get(2).getWeight());
+        n.setFibRow(target,path1,path2,path3);
     }
 
     public void updateEdgeCosts(VariableGraph graph) {

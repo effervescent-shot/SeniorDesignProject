@@ -46,23 +46,31 @@ public class FIB {
         public void setThirdSimPath(SimPath thirdSimPath) {
             this.thirdSimPath = thirdSimPath;
         }
+
+        public void FIBRow_toString() {
+            System.out.println("First " + firstSimPath.toString() + "\n"+ "Second " + secondSimPath.toString() + "\n" + "Third " + thirdSimPath.toString());
+        }
     }
 
-    Map<Integer,FIBRow> forwardingTable = new HashMap<Integer,FIBRow>();
+    Map<Integer, FIBRow> forwardingTable = new HashMap<Integer, FIBRow>();
 
     public FIBRow row;
-    public FIB(int nodeID) {
-        row = new FIBRow();
-        forwardingTable.put(nodeID, row);
+
+    public FIB() {
+
+    }
+
+    public FIBRow createFIBRow(SimPath p1, SimPath p2, SimPath p3){
+        return new FIBRow(p1, p2,p3);
     }
 
     public void addFIBEntry(int nodeID, FIBRow fibRow) {
         forwardingTable.put(nodeID, fibRow);
     }
 
-    public void alterFIBRowPath(int nodeID, int pathID, SimPath newSimPath){
-        if(!forwardingTable.containsKey(nodeID)){
-            return;
+    public void alterFIBRowPath(int nodeID, int pathID, SimPath newSimPath) {
+        if (!forwardingTable.containsKey(nodeID)) {
+            forwardingTable.put(nodeID, new FIBRow());
         }
         FIBRow fr = forwardingTable.get(nodeID);
         switch (pathID) {
@@ -76,6 +84,14 @@ public class FIB {
                 fr.setThirdSimPath(newSimPath);
                 break;
         }
-        forwardingTable.put(nodeID,fr);
+        forwardingTable.put(nodeID, fr);
     }
+
+    public String FIB_toString() {
+        for (Integer nodeID : forwardingTable.keySet()) {
+           forwardingTable.get(nodeID).FIBRow_toString();
+        }
+        return "";
+    }
+
 }

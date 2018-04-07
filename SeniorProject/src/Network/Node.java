@@ -14,14 +14,14 @@ public class Node {
 
     public Node (int ID) {
         this.ID = ID;
-        this.fib = new FIB(ID);
+        this.fib = new FIB();
         this.rib = new RIB();
      }
 
     public Node(int ID, String name) {
         this.ID = ID;
         this.name = name;
-        this.fib = new FIB(ID);
+        this.fib = new FIB();
         this.rib = new RIB();
     }
 
@@ -62,7 +62,7 @@ public class Node {
         this.rib = rib;
     }
 
-    public void setFibRow(int nodeID, int pathID, SimPath path) {
-        this.fib.alterFIBRowPath(nodeID, pathID, path);
+    public void setFibRow(int nodeID, SimPath path1, SimPath path2, SimPath path3) {
+        fib.addFIBEntry(nodeID, this.fib.createFIBRow(path1,path2,path3));
     }
 }

@@ -2,7 +2,9 @@ package Helper;
 
 import Simulator.Simulator;
 
+import javax.lang.model.type.ArrayType;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SimPath {
     private double cost;
@@ -13,9 +15,9 @@ public class SimPath {
     }
 
 
-    public SimPath(ArrayList<Integer> path){
+    public SimPath(ArrayList<Integer> path, double cost){
         this.path=path;
-        cost = calculateCost();
+        this.cost = cost;
     }
 
     public void setReverse(){
@@ -72,12 +74,7 @@ public class SimPath {
     @Override
     public String toString() {
         String s="SimPath{" +
-                "cost=" + cost + ", path=[" ;
-
-        for (int i : path){
-            s+=i+"\t";
-        }
-         s+= path + "]}";
+                "cost=" + cost + "  " + Arrays.toString(path.toArray()) + "\n";
         return s;
     }
 }
