@@ -1,0 +1,9 @@
+8
+0 prefix1;prefix2
+1 prefix8;prefix3;prefix5
+2 prefix5;prefix6
+3 prefix2;prefix6;prefix7
+4 prefix3
+5 prefix1;prefix4;prefix8
+6 prefix2;prefix7
+7 prefix6;prefix8

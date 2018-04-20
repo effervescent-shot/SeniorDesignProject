@@ -1,5 +1,6 @@
 package Simulator;
 import ICN.FIB;
+import ICN.Prefix;
 import Network.*;
 import Helper.*;
 import kPath.Graph;
@@ -16,6 +17,7 @@ import java.util.*;
 public class Simulator {
     public static Map<Integer, Node> networkNodes = new HashMap();
     public static Map<Pair<Integer, Integer>, Link> newtworkLinks = new HashMap();
+    public static Map<String, Prefix> networkPrefixes = new HashMap<>();
     public RoutingAlgorithm routingAlgorithm;
 
     public Simulator() {

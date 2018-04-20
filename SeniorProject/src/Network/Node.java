@@ -3,7 +3,11 @@ package Network;
 import Enums.NodeType;
 import Helper.SimPath;
 import ICN.FIB;
+import ICN.Prefix;
 import ICN.RIB;
+import Simulator.Event;
+
+import java.util.ArrayList;
 
 public class Node {
     private int ID;
@@ -11,11 +15,15 @@ public class Node {
     private NodeType type;
     private FIB fib;
     private RIB rib;
+    ArrayList<String> servedPrefixes;
+    ArrayList<String> demandedPrefixes;
 
     public Node (int ID) {
         this.ID = ID;
         this.fib = new FIB();
         this.rib = new RIB();
+        servedPrefixes=new ArrayList<String>();
+        demandedPrefixes = new ArrayList<String>();
      }
 
     public Node(int ID, String name) {
@@ -23,12 +31,11 @@ public class Node {
         this.name = name;
         this.fib = new FIB();
         this.rib = new RIB();
+        servedPrefixes=new ArrayList<String>();
+        demandedPrefixes = new ArrayList<String>();
     }
 
-    public Node (int ID, NodeType type) {
-        this.ID = ID;
-        this.type = type;
-    }
+
 
     public int getID() {
         return ID;
@@ -64,5 +71,36 @@ public class Node {
 
     public void setFibRow(int nodeID, SimPath path1, SimPath path2, SimPath path3) {
         fib.addFIBEntry(nodeID, this.fib.createFIBRow(path1,path2,path3));
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<String> getServedPrefixes() {
+        return servedPrefixes;
+    }
+
+    public void setServedPrefixes(ArrayList<String> servedPrefixes) {
+        this.servedPrefixes = servedPrefixes;
+    }
+
+    public ArrayList<String> getDemandedPrefixes() {
+        return demandedPrefixes;
+    }
+
+    public void setDemandedPrefixes(ArrayList<String> demandedPrefixes) {
+        this.demandedPrefixes = demandedPrefixes;
+    }
+
+    public void sendData(Event event){
+
+    }
+    public void receiveData(Event event){
+
     }
 }
