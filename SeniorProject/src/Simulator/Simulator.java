@@ -19,6 +19,7 @@ public class Simulator {
     public static Map<Pair<Integer, Integer>, Link> newtworkLinks = new HashMap();
     public static Map<String, Prefix> networkPrefixes = new HashMap<>();
     public RoutingAlgorithm routingAlgorithm;
+    public static PriorityQueue<Event> eventQueue;
 
     public Simulator() {
         routingAlgorithm = new RoutingAlgorithm();
@@ -31,6 +32,12 @@ public class Simulator {
     public void RunDijkstra(){
         for (Node n: networkNodes.values()) {
             routingAlgorithm.runDijkstra(n);
+        }
+    }
+
+    public void runSimulation(int pathDegree){
+        for (Node node: networkNodes.values()) {
+            node.setEvents();
         }
     }
 

@@ -34,6 +34,10 @@ public class Node {
         servedPrefixes=new ArrayList<String>();
         demandedPrefixes = new ArrayList<String>();
     }
+    
+    public void setEvents(){
+
+    }
 
 
 

@@ -11,11 +11,12 @@ public class Main {
         Simulator sim = new Simulator();
         TopologyReader tr = new TopologyReader("input.txt",sim);
         Graph graph = new VariableGraph("ginput.txt");
+        sim.buildPaths(graph);
         PrefixReader pr = new PrefixReader("prefix_input.txt",sim);
         ServeReader sr = new ServeReader("serve_input.txt",sim);
         DemandReader dr = new DemandReader("demand_input.txt",sim);
+        sim.runSimulation(3);
 
-        sim.buildPaths(graph);
 
     }
 
