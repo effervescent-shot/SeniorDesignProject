@@ -52,6 +52,7 @@ public class Event implements Comparable {
     public void setPacket(Packet packet) {
         this.packet = packet;
     }
+
     public boolean hasPacket(){
         if(this.eventType==EventType.RUN_DIJKSTRA){
             return false;

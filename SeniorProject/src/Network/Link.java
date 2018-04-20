@@ -8,6 +8,9 @@ public class Link {
     private double load;
     private double cost;
 
+    private double deltaLoad = 0;
+    private double deltaTime = 1;
+
     public Link(int ID, int capacity) {
         this.ID = ID;
         this.capacity = capacity;
@@ -51,5 +54,19 @@ public class Link {
 
     public Node getSecondNode(){
         return this.secondNode;
+    }
+
+    public void resetLoad() {
+        deltaLoad = 0;
+        deltaTime = 1;
+    }
+
+    public void updateLoad() {
+        load = deltaLoad/deltaTime;
+    }
+
+    public void augmentLoad(double packetSize, double time) {
+        deltaLoad += packetSize;
+        deltaTime += time;
     }
 }

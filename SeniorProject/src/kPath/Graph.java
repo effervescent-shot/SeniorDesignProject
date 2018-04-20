@@ -35,7 +35,6 @@ package kPath;
 import Helper.Pair;
 import kPath.abstraction.BaseGraph;
 import kPath.abstraction.BaseVertex;
-import kPath.Vertex;
 
 import java.io.*;
 import java.util.*;
@@ -59,7 +58,7 @@ public class Graph implements BaseGraph {
 		new HashMap<Integer, Set<BaseVertex>>();
 	
 	// index for edge weights in the graph
-	protected Map<Pair<Integer, Integer>, Double> vertexPairWeightIndex =
+	public Map<Pair<Integer, Integer>, Double> vertexPairWeightIndex =  /////I made it public. A method can be written
 		new HashMap<Pair<Integer, Integer>, Double>();
 	
 	// index for vertices in the graph

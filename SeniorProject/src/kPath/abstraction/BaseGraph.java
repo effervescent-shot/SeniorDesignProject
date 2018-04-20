@@ -31,8 +31,6 @@
 
 package kPath.abstraction;
 
-import kPath.abstraction.BaseVertex;
-
 import java.util.List;
 import java.util.Set;
 

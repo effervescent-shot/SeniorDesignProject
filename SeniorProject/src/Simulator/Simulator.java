@@ -1,17 +1,11 @@
 package Simulator;
-import ICN.FIB;
 import ICN.Prefix;
 import Network.*;
 import Helper.*;
 import kPath.Graph;
 import kPath.Path;
-import kPath.VariableGraph;
-import kPath.abstraction.BaseGraph;
-import kPath.abstraction.BaseVertex;
+
 import kPath.shortestpaths.YenTopKShortestPathsAlg;
-
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Simulator {
@@ -21,7 +15,11 @@ public class Simulator {
     public RoutingAlgorithm routingAlgorithm;
     public static PriorityQueue<Event> eventQueue;
 
-    public Simulator() {
+    public Simulator(){
+
+    }
+
+    /*public Simulator() {
         routingAlgorithm = new RoutingAlgorithm();
     }
 
@@ -33,24 +31,25 @@ public class Simulator {
         for (Node n: networkNodes.values()) {
             routingAlgorithm.runDijkstra(n);
         }
-    }
+    } */
 
-    public void runSimulation(int pathDegree){
+    public void runSimulation(Graph graph, int pathDegree){
+        buildPaths(graph, pathDegree);
+
         for (Node node: networkNodes.values()) {
             node.setEvents();
         }
     }
 
-    public void buildPaths(Graph graph) {
-
+    public void buildPaths(Graph graph, int k) {
+        updateEdgeCosts(graph);
 
         YenTopKShortestPathsAlg yenAlg = new YenTopKShortestPathsAlg(graph);
-
         for (Node n: networkNodes.values()) {
             for (Node m: networkNodes.values()) {
                 if(n.getID() != m.getID()){
                     List<Path> shortest_paths_list = yenAlg.getShortestPaths(
-                            graph.getVertex(n.getID()), graph.getVertex(m.getID()), 3);
+                            graph.getVertex(n.getID()), graph.getVertex(m.getID()),k);
                     addPath(shortest_paths_list, n.getID(), m.getID());
                 }
             }
@@ -66,7 +65,15 @@ public class Simulator {
         n.setFibRow(target,path1,path2,path3);
     }
 
-    public void updateEdgeCosts(VariableGraph graph) {
+    public void updateEdgeCosts(Graph graph) {
+        for (Link l: newtworkLinks.values() ) {
+            l.updateLoad();
+            l.resetLoad();
+            graph.vertexPairWeightIndex.put(
+                    new Pair<Integer, Integer>(l.getFirstNode().getID(),l.getSecondNode().getID())
+            ,l.getCost());
+        }
+
 
     }
 

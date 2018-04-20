@@ -33,7 +33,6 @@ package kPath;
 
 import Helper.Pair;
 import kPath.abstraction.BaseVertex;
-import kPath.shortestpaths.YenTopKShortestPathsAlg;
 
 import java.util.*;
 
@@ -229,7 +228,7 @@ public class VariableGraph extends Graph {
 
 	/**
 	 * @param args
-	 */
+	 *
 	public static void main(String[] args) {
 		System.out.println("Welcome to the class VariableGraph!");
 		
@@ -244,7 +243,7 @@ public class VariableGraph extends Graph {
 			System.out.println(cur_result.toString());
 			k++;
 		}
-	}
+	} */
 
 
 }
