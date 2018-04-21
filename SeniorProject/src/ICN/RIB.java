@@ -30,6 +30,11 @@ public class RIB {
                 ribTable.get(prefix).add(nodeID);
             }
         }
+        else{
+            ArrayList<Integer> row = new ArrayList<>();
+            row.add(nodeID);
+            ribTable.put(prefix,row);
+        }
     }
 
 

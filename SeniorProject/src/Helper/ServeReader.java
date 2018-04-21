@@ -1,6 +1,7 @@
 package Helper;
 
 import ICN.Prefix;
+import ICN.RIB;
 import Simulator.Simulator;
 
 import java.io.File;
@@ -28,7 +29,7 @@ public class ServeReader {
             int nodeID;
             String prefix;
             String[] prefixes;
-
+            RIB rib = new RIB();
             //Prefix prefix;
 
             for (int i = 0; i<n; i++) {
@@ -38,10 +39,14 @@ public class ServeReader {
                 ArrayList<String> tmp = new ArrayList<String>();
                 for (int j = 0; j < prefixes.length; j++) {
                     tmp.add(prefixes[j]);
+                    rib.addNodeToRIBRowNodeList(simulator.networkPrefixes.get(prefixes[j]),nodeID);
                 }
                 simulator.networkNodes.get(nodeID).setServedPrefixes(tmp);
 
             }
+            /*for (int i = 0; i <simulator. ; i++) {
+
+            }*/
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
