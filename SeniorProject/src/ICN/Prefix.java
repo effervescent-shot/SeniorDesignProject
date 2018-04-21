@@ -2,6 +2,7 @@ package ICN;
 
 public class Prefix {
     String prefixName;
+    Data data;
 
     public Prefix(){
 

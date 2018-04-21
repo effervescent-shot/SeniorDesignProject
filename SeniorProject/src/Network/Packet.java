@@ -3,14 +3,28 @@ package Network;
 import Enums.PacketType;
 import Helper.SimPath;
 import ICN.Data;
+import ICN.Prefix;
 
 public class Packet {
-    private long ID;
+    private static final int InterestPacketSize = 128; //MB
+    private static final int DataPacketSize = 1024; //MB
+
+    private static long ID = 11000;
     private int sourceNodeID;
     private int destinationNodeID;
-    private Data data;
+    private Prefix prefix;
     private SimPath simPath;
     private PacketType packetType;
+
+    public Packet () {
+       this.ID++;
+    }
+
+    public Packet (SimPath path, PacketType packetType) {
+        this.ID++;
+        this.simPath = path;
+        this.packetType = packetType;
+    }
 
     public long getID() {
         return ID;
@@ -36,13 +50,9 @@ public class Packet {
         this.destinationNodeID = destinationNodeID;
     }
 
-    public Data getData() {
-        return data;
-    }
+    public Prefix getPrefix() { return prefix; }
 
-    public void setData(Data data) {
-        this.data = data;
-    }
+    public void setPrefix(Prefix prefix) { this.prefix = prefix; }
 
     public SimPath getSimPath() {
         return simPath;
@@ -59,4 +69,8 @@ public class Packet {
     public void setPacketType(PacketType packetType) {
         this.packetType = packetType;
     }
+
+    public static int getInterestPacketSize() { return InterestPacketSize; }
+
+    public static int getDataPacketSize() { return DataPacketSize; }
 }

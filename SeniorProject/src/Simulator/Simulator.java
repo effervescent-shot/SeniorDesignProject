@@ -12,36 +12,24 @@ public class Simulator {
     public static Map<Integer, Node> networkNodes = new HashMap();
     public static Map<Pair<Integer, Integer>, Link> newtworkLinks = new HashMap();
     public static Map<String, Prefix> networkPrefixes = new HashMap<>();
-    public RoutingAlgorithm routingAlgorithm;
     public static PriorityQueue<Event> eventQueue;
-
-    public Simulator(){
-
+    private static long MAX_SIM_TIME;
+    public Simulator(long max_sim_time){
+        this.MAX_SIM_TIME = max_sim_time;
     }
 
-    /*public Simulator() {
-        routingAlgorithm = new RoutingAlgorithm();
-    }
-
-    public void InitializeRoutingAlgorithm() {
-        routingAlgorithm.constructGraphNodes(this.networkNodes);
-    }
-
-    public void RunDijkstra(){
-        for (Node n: networkNodes.values()) {
-            routingAlgorithm.runDijkstra(n);
-        }
-    } */
 
     public void runSimulation(Graph graph, int pathDegree){
         buildPaths(graph, pathDegree);
-
         for (Node node: networkNodes.values()) {
-            node.setEvents();
+            ///////// initialize initial requests //////
         }
+
+
+
     }
 
-    public void buildPaths(Graph graph, int k) {
+    public static void buildPaths(Graph graph, int pathDegree) {
         updateEdgeCosts(graph);
 
         YenTopKShortestPathsAlg yenAlg = new YenTopKShortestPathsAlg(graph);
@@ -49,15 +37,15 @@ public class Simulator {
             for (Node m: networkNodes.values()) {
                 if(n.getID() != m.getID()){
                     List<Path> shortest_paths_list = yenAlg.getShortestPaths(
-                            graph.getVertex(n.getID()), graph.getVertex(m.getID()),k);
+                            graph.getVertex(n.getID()), graph.getVertex(m.getID()),pathDegree);
                     addPath(shortest_paths_list, n.getID(), m.getID());
                 }
             }
         }
-        networkNodes.get(0).getFib().FIB_toString();
+        //networkNodes.get(7).getFib().FIB_toString();
     }
 
-    public void addPath(List<Path> paths, int source, int target ) {
+    public static void addPath(List<Path> paths, int source, int target ) {
         Node n = networkNodes.get(source);
         SimPath path1 = new SimPath(paths.get(0).getPathList(), paths.get(0).getWeight());
         SimPath path2 = new SimPath(paths.get(1).getPathList(),paths.get(1).getWeight());
@@ -65,13 +53,12 @@ public class Simulator {
         n.setFibRow(target,path1,path2,path3);
     }
 
-    public void updateEdgeCosts(Graph graph) {
+    public static void updateEdgeCosts(Graph graph) {
         for (Link l: newtworkLinks.values() ) {
             l.updateLoad();
             l.resetLoad();
             graph.vertexPairWeightIndex.put(
-                    new Pair<Integer, Integer>(l.getFirstNode().getID(),l.getSecondNode().getID())
-            ,l.getCost());
+                    new Pair<Integer, Integer>(l.getFirstNode().getID(),l.getSecondNode().getID()),l.getCost());
         }
 
 

@@ -73,8 +73,6 @@ public class SimPath {
 
     @Override
     public String toString() {
-        String s="SimPath{" +
-                "cost=" + cost + "  " + Arrays.toString(path.toArray()) + "\n";
-        return s;
+        return "SimPath{" +  "cost=" + cost + "  " + Arrays.toString(path.toArray()) + "\n";
     }
 }

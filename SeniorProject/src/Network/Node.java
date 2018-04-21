@@ -4,7 +4,7 @@ import Enums.NodeType;
 import Helper.SimPath;
 import ICN.FIB;
 import ICN.RIB;
-import Simulator.Event;
+
 
 import java.util.ArrayList;
 
@@ -16,6 +16,7 @@ public class Node {
     private RIB rib;
     ArrayList<String> servedPrefixes;
     ArrayList<String> demandedPrefixes;
+    private int currentTime = 0;
 
     public Node (int ID) {
         this.ID = ID;
@@ -33,12 +34,6 @@ public class Node {
         servedPrefixes=new ArrayList<String>();
         demandedPrefixes = new ArrayList<String>();
     }
-    
-    public void setEvents(){
-
-    }
-
-
 
     public int getID() {
         return ID;
@@ -100,10 +95,4 @@ public class Node {
         this.demandedPrefixes = demandedPrefixes;
     }
 
-    public void sendData(Event event){
-
-    }
-    public void receiveData(Event event){
-
-    }
 }
