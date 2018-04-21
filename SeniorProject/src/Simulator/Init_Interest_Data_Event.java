@@ -3,6 +3,9 @@ package Simulator;
 import Enums.EventType;
 import ICN.Prefix;
 
+import static Enums.EventType.INITIALIZE_DATA;
+import static Enums.EventType.INITIALIZE_INTEREST;
+
 public class Init_Interest_Data_Event extends Event {
     private int sourceID;
     private int destinationID = -1;
@@ -32,4 +35,16 @@ public class Init_Interest_Data_Event extends Event {
     public Prefix getPrefix() { return prefix; }
 
     public void setPrefix(Prefix prefix) { this.prefix = prefix; }
+
+    ////////Fill later //////////
+    @Override
+    public void runEvent () {
+        if(this.getEventType() == INITIALIZE_INTEREST) {
+
+        }
+
+        if(this.getEventType() == INITIALIZE_DATA) {
+
+        }
+    }
 }

@@ -4,6 +4,8 @@ import Enums.EventType;
 import Helper.Pair;
 import Network.Link;
 
+import static Enums.EventType.*;
+
 public class Send_Receive_Event extends Event{
     private int from;    /// A-->B from A to B   //// B<--A to B from A
     private int to;
@@ -48,5 +50,25 @@ public class Send_Receive_Event extends Event{
 
     public void setaLink(Link aLink) {
         this.aLink = aLink;
+    }
+
+    ////////Fill later //////////////
+    @Override
+    public void runEvent () {
+        if(this.getEventType() == SEND_INTEREST) {
+
+        }
+
+        if(this.getEventType() == SEND_DATA) {
+
+        }
+
+        if(this.getEventType() == RECEIVE_INTEREST) {
+
+        }
+
+        if(this.getEventType() == RECEIVE_DATA) {
+
+        }
     }
 }

@@ -5,7 +5,7 @@ import kPath.VariableGraph;
 
 public class Main {
     public static void main (String args[]) {
-        Simulator sim = new Simulator(1000);
+        Simulator sim = new Simulator(100000000);
         TopologyReader tr = new TopologyReader("data/input.txt",sim);
         Graph graph = new VariableGraph("data/ginput.txt");
         PrefixReader pr = new PrefixReader("data/prefix_input.txt",sim);

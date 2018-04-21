@@ -56,17 +56,14 @@ public class Link {
         return this.secondNode;
     }
 
-    public void resetLoad() {
-        deltaLoad = 0;
-        deltaTime = 1;
-    }
+    public void resetLoad() { deltaLoad = 0; deltaTime = 1; }
 
     public void updateLoad() {
         load = deltaLoad/deltaTime;
     }
 
-    public void augmentLoad(double packetSize, double time) {
+    public void augmentLoad(double packetSize) {
         deltaLoad += packetSize;
-        deltaTime += time;
+        deltaTime += packetSize/capacity;
     }
 }

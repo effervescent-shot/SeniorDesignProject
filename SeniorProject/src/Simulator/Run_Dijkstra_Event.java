@@ -9,8 +9,9 @@ public class Run_Dijkstra_Event extends Event {
         super(time, eventType);
     }
 
-    public void runEvent(Graph graph, int pathDegree) {
-        Simulator.buildPaths(graph, pathDegree);
+    @Override
+    public void runEvent() {
+
     }
 
 }

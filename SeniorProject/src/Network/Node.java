@@ -4,9 +4,11 @@ import Enums.NodeType;
 import Helper.SimPath;
 import ICN.FIB;
 import ICN.RIB;
+import Simulator.Event;
 
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class Node {
     private int ID;
@@ -16,7 +18,8 @@ public class Node {
     private RIB rib;
     ArrayList<String> servedPrefixes;
     ArrayList<String> demandedPrefixes;
-    private int currentTime = 0;
+    private PriorityQueue<Event> sendBuffer;
+    private PriorityQueue<Event> receiveBuffer;
 
     public Node (int ID) {
         this.ID = ID;
@@ -24,6 +27,8 @@ public class Node {
         this.rib = new RIB();
         servedPrefixes=new ArrayList<String>();
         demandedPrefixes = new ArrayList<String>();
+        sendBuffer = new PriorityQueue<>();
+        receiveBuffer = new PriorityQueue<>();
      }
 
     public Node(int ID, String name) {
@@ -33,6 +38,8 @@ public class Node {
         this.rib = new RIB();
         servedPrefixes=new ArrayList<String>();
         demandedPrefixes = new ArrayList<String>();
+        sendBuffer = new PriorityQueue<>();
+        receiveBuffer = new PriorityQueue<>();
     }
 
     public int getID() {

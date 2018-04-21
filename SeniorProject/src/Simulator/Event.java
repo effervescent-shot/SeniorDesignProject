@@ -44,4 +44,8 @@ public class Event implements Comparable {
         return "Event type: "+this.eventType+ " at time "+ this.time + "\n";
     }
 
+    public void runEvent() {
+
+    }
+
 }
