@@ -102,4 +102,20 @@ public class Node {
         this.demandedPrefixes = demandedPrefixes;
     }
 
+
+    ///////////////////     Fill later      ////////////
+
+    public void Send() {
+
+    }
+
+    public void Receive() {
+        /////  if this is the destination   ////
+                /////   if interest received
+
+                /////    if data received
+
+        ///   if this is not the destination //////
+    }
+
 }
