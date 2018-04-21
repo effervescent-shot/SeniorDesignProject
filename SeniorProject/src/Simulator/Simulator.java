@@ -26,10 +26,10 @@ public class Simulator {
         buildPaths(graph, pathDegree);
 
             ///////// initialize initial interests //////////
-        while(!eventQueue.isEmpty() && SimTime < MAX_SIM_TIME) {
+       /* while(!eventQueue.isEmpty() && SimTime < MAX_SIM_TIME) {
             Event e = (Event)eventQueue.poll();
             e.runEvent();
-        }
+        } */
 
 
     }

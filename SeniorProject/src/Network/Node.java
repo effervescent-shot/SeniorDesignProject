@@ -3,6 +3,7 @@ package Network;
 import Enums.NodeType;
 import Helper.SimPath;
 import ICN.FIB;
+import ICN.Prefix;
 import ICN.RIB;
 import Simulator.Event;
 
@@ -116,6 +117,14 @@ public class Node {
                 /////    if data received
 
         ///   if this is not the destination //////
+    }
+
+    public void Initialize_Interest(int time, Prefix prefix) {
+
+    }
+
+    public void Initialize_Data(int time, Prefix prefix, int destinationID) {
+
     }
 
 }

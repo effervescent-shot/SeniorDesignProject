@@ -4,9 +4,9 @@ public class Prefix {
     String prefixName;
     Data data;
 
-    public Prefix(String prefixName){
+    public Prefix(String prefixName, int size){
         this.prefixName=prefixName;
-        ///data = new Data(size);  Bu constructor size da alsın ki data sizeları bilelim
+        data = new Data(size);
     }
 
     public String getPrefixName() {
