@@ -8,15 +8,17 @@ import kPath.Path;
 import kPath.shortestpaths.YenTopKShortestPathsAlg;
 import java.util.*;
 
+import static Enums.EventType.RUN_DIJKSTRA;
+
 public class Simulator {
     public static Map<Integer, Node> networkNodes = new HashMap();
     public static Map<Pair<Integer, Integer>, Link> newtworkLinks = new HashMap();
     public static Map<String, Prefix> networkPrefixes = new HashMap<>();
     public static PriorityQueue<Event> eventQueue;
-    private static long MAX_SIM_TIME;
-    private static long SimTime;
+    private static double MAX_SIM_TIME;
+    private static double SimTime;  //milisecond
 
-    public Simulator(long max_sim_time){
+    public Simulator(double max_sim_time){
         this.MAX_SIM_TIME = max_sim_time;
         SimTime = 0;
     }
@@ -26,10 +28,15 @@ public class Simulator {
         buildPaths(graph, pathDegree);
 
             ///////// initialize initial interests //////////
-       /* while(!eventQueue.isEmpty() && SimTime < MAX_SIM_TIME) {
+        while(!eventQueue.isEmpty() && SimTime < MAX_SIM_TIME) {
             Event e = (Event)eventQueue.poll();
-            e.runEvent();
-        } */
+            if(e.getEventType() == RUN_DIJKSTRA) {
+                updateEdgeCosts(graph);
+                buildPaths(graph, pathDegree);
+            } else {
+                e.runEvent();
+            }
+        }
 
 
     }

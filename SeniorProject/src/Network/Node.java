@@ -9,6 +9,8 @@ import Simulator.Event;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 public class Node {
@@ -19,8 +21,9 @@ public class Node {
     private RIB rib;
     ArrayList<String> servedPrefixes;
     ArrayList<String> demandedPrefixes;
-    private PriorityQueue<Event> sendBuffer;
-    private PriorityQueue<Event> receiveBuffer;
+    private Map<Link,PriorityQueue<Event>> sendBuffers;
+    private Map<Link,PriorityQueue<Event>> receiveBuffers;
+    private double NodeTime = 0;
 
     public Node (int ID) {
         this.ID = ID;
@@ -28,8 +31,8 @@ public class Node {
         this.rib = new RIB();
         servedPrefixes=new ArrayList<String>();
         demandedPrefixes = new ArrayList<String>();
-        sendBuffer = new PriorityQueue<>();
-        receiveBuffer = new PriorityQueue<>();
+        sendBuffers = new HashMap<Link,PriorityQueue<Event>>();
+        receiveBuffers = new HashMap<Link,PriorityQueue<Event>>();
      }
 
     public Node(int ID, String name) {
@@ -39,8 +42,8 @@ public class Node {
         this.rib = new RIB();
         servedPrefixes=new ArrayList<String>();
         demandedPrefixes = new ArrayList<String>();
-        sendBuffer = new PriorityQueue<>();
-        receiveBuffer = new PriorityQueue<>();
+        sendBuffers = new HashMap<Link,PriorityQueue<Event>>();
+        receiveBuffers = new HashMap<Link,PriorityQueue<Event>>();
     }
 
     public int getID() {
@@ -127,4 +130,7 @@ public class Node {
 
     }
 
+    public void addDelay(){
+
+    }
 }
