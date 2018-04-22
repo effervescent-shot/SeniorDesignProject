@@ -4,26 +4,32 @@ import Enums.PacketType;
 import Helper.SimPath;
 import ICN.Data;
 import ICN.Prefix;
+import Simulator.Simulator;
 
 public class Packet {
     private static final int InterestPacketSize = 128; //MB
     private static final int DataPacketSize = 1024; //MB
 
-    private static long ID = 11000;
+    private static long ID = 10000;
     private int sourceNodeID;
     private int destinationNodeID;
     private Prefix prefix;
     private SimPath simPath;
     private PacketType packetType;
 
-    public Packet () {
+    private double CreationTime;
+    private double TerminationTime;
+
+    public Packet (double creationTime) {
        this.ID++;
+       this.CreationTime = creationTime;
     }
 
-    public Packet (SimPath path, PacketType packetType) {
+    public Packet (SimPath path, PacketType packetType, double creationTime) {
         this.ID++;
         this.simPath = path;
         this.packetType = packetType;
+        this.CreationTime = creationTime;
     }
 
     public long getID() {
@@ -73,4 +79,9 @@ public class Packet {
     public static int getInterestPacketSize() { return InterestPacketSize; }
 
     public static int getDataPacketSize() { return DataPacketSize; }
+
+    public void terminatePacket(double terminationTime) {
+        this.TerminationTime = terminationTime;
+        Simulator.allPackets.add(this);
+    }
 }

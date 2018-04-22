@@ -17,7 +17,7 @@ public class Send_Receive_Event extends Event{
         this.from = from;
         this.to = to;
         this.aPackage = pack;
-        this.aLink = Simulator.newtworkLinks.get(new Pair<Integer,Integer>(from,to));
+        this.aLink = Simulator.networkLinks.get(new Pair<Integer,Integer>(from,to));
     }
 
     public int getFrom() {

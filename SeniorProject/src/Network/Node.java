@@ -8,10 +8,8 @@ import ICN.RIB;
 import Simulator.Event;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class Node {
     private int ID;
@@ -23,6 +21,7 @@ public class Node {
     ArrayList<String> demandedPrefixes;
     private Map<Link,PriorityQueue<Event>> sendBuffers;
     private Map<Link,PriorityQueue<Event>> receiveBuffers;
+
     private double NodeTime = 0;
 
     public Node (int ID) {
@@ -122,15 +121,50 @@ public class Node {
         ///   if this is not the destination //////
     }
 
-    public void Initialize_Interest(int time, Prefix prefix) {
+    public void Initialize_Interest(double time, Prefix prefix) {
+        System.out.println("Node: "+ this.ID + " at: " + time + " Prefix: " +  prefix.getPrefixName() + " size: "+prefix.getData().getSize());
+        //System.out.println(Arrays.toString(servedPrefixes.toArray()));
+
+        if(servedPrefixes.contains(prefix.getPrefixName())) {
+            createSendEvents(prefix, this.ID, prefix.getData().getOwner()/1024 + 1);
+            return;
+        }
+
+        ArrayList<Integer> sources = rib.getNodeListofPrefix(prefix);
+        System.out.println(prefix.getPrefixName() + " " +Arrays.toString(sources.toArray()));
+
+        PriorityQueue<SimPath> allPaths = new PriorityQueue<>();
+        for (int i = 0; i< sources.size(); i++) {
+            FIB.FIBRow fr = fib.getFIBRow(sources.get(i));
+            allPaths.add(fr.getFirstSimPath());
+            allPaths.add(fr.getSecondSimPath());
+            allPaths.add(fr.getThirdSimPath());
+        }
+
+        SimPath kingPath = allPaths.poll();
+        SimPath queenPath = allPaths.poll();
+        SimPath heirPath = allPaths.poll();
+
+        System.out.print("King: " +kingPath.toString() + "\n" +
+                        "Queen: " +queenPath.toString() + "\n"+
+                        "Heir: "  +heirPath.toString());
 
     }
 
-    public void Initialize_Data(int time, Prefix prefix, int destinationID) {
+    public void Initialize_Data(double time, Prefix prefix, int destinationID, int pathID) {
 
     }
 
-    public void addDelay(){
+    public void createLinkBuffers (Link link1, Link link2) {
+        sendBuffers.put(link1, new PriorityQueue<>());
+        receiveBuffers.put(link2, new PriorityQueue<>());
+    }
 
+    private void createSendEvents(Prefix p, int destNodeID, int numOfEvents){
+        if(destNodeID == this.ID){
+
+        } else {
+
+        }
     }
 }

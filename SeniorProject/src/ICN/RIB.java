@@ -17,7 +17,6 @@ public class RIB {
         } else {
             return new ArrayList<Integer>();
         }
-
     }
 
     public void addRIBRow(Prefix prefix, ArrayList<Integer> nodeList) {

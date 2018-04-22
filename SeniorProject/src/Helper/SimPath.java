@@ -2,11 +2,10 @@ package Helper;
 
 import Simulator.Simulator;
 
-import javax.lang.model.type.ArrayType;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SimPath {
+public class SimPath implements Comparable{
     private double cost;
     private ArrayList<Integer> path; // = new ArrayList<Integer>();
 
@@ -61,7 +60,7 @@ public class SimPath {
             firstID = path.get(i);
             secondID = path.get(i+1);
             p = new Pair<>(firstID,secondID);
-            sum+= Simulator.newtworkLinks.get(p).getCost();
+            sum+= Simulator.networkLinks.get(p).getCost();
         }
 
         return cost;
@@ -74,5 +73,12 @@ public class SimPath {
     @Override
     public String toString() {
         return "SimPath{" +  "cost=" + cost + "  " + Arrays.toString(path.toArray()) + "\n";
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(this.cost == ((SimPath)o).getCost()) return 0;
+        else if(this.cost > ((SimPath)o).getCost()) return 1;
+        else   return -1;
     }
 }

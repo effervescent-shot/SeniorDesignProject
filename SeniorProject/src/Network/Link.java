@@ -66,4 +66,6 @@ public class Link {
         deltaLoad += packetSize;
         deltaTime += packetSize/capacity;
     }
+
+
 }

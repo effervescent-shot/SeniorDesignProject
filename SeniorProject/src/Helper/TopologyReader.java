@@ -3,7 +3,7 @@ package Helper;
 import Network.Link;
 import Network.Node;
 import Simulator.Simulator;
-import Helper.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class TopologyReader {
             String snode;
             int fn = 0;
             int sn = 0;
-            int lenght = 0;
+            int capacity = 0;
             int nid = 0;  //nodeID
             int eid = 1000;   //edgeID
             Node first;
@@ -42,7 +42,7 @@ public class TopologyReader {
             for (int i = 0; i<n; i++) {
                 fnode = reader.next();
                 snode = reader.next();
-                lenght = reader.nextInt();
+                capacity = reader.nextInt();
 
                 if(!nodenames.contains(fnode)) {
                     nodenames.add(fnode);
@@ -64,8 +64,13 @@ public class TopologyReader {
                 Pair<Integer,Integer> edgePair1 = new Pair<>(first.getID(), second.getID());
                 Pair<Integer,Integer> edgePair2 = new Pair<>(second.getID(), first.getID());
                 //System.out.println(edgePair.getLeft() + " " + edgePair.getRight());
-                simulator.newtworkLinks.put(edgePair1, new Link(eid++, first, second,lenght));
-                simulator.newtworkLinks.put(edgePair2, new Link(eid++, second, first,lenght));
+                Link direc1 = new Link(eid++, first, second,capacity);
+                Link direc2 = new Link(eid++, second, first,capacity);
+                simulator.networkLinks.put(edgePair1, direc1);
+                simulator.networkLinks.put(edgePair2, direc2);
+
+                simulator.networkNodes.get(first.getID()).createLinkBuffers(direc1,direc2);
+                simulator.networkNodes.get(second.getID()).createLinkBuffers(direc2, direc1);
 
             }
 

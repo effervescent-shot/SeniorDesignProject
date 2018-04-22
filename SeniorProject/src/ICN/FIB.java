@@ -48,7 +48,9 @@ public class FIB {
         }
 
         public void FIBRow_toString() {
-            System.out.println("First " + firstSimPath.toString() + "\n"+ "Second " + secondSimPath.toString() + "\n" + "Third " + thirdSimPath.toString());
+            System.out.println("First " + firstSimPath.toString() + "\n"+
+                                "Second " + secondSimPath.toString() + "\n" +
+                                "Third " + thirdSimPath.toString());
         }
     }
 
@@ -85,6 +87,10 @@ public class FIB {
                 break;
         }
         forwardingTable.put(nodeID, fr);
+    }
+
+    public FIBRow getFIBRow(int nodeID) {
+        return forwardingTable.get(nodeID);
     }
 
     public String FIB_toString() {
