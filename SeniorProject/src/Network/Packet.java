@@ -25,7 +25,7 @@ public class Packet {
        this.CreationTime = creationTime;
     }
 
-    public Packet (SimPath path, PacketType packetType, double creationTime) {
+    public Packet (double creationTime, PacketType packetType, SimPath path) {
         this.ID++;
         this.simPath = path;
         this.packetType = packetType;

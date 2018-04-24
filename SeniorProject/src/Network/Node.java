@@ -1,14 +1,17 @@
 package Network;
 
+import Enums.EventType;
 import Enums.NodeType;
+import Enums.PacketType;
+import Helper.Pair;
 import Helper.SimPath;
 import ICN.FIB;
 import ICN.Prefix;
 import ICN.RIB;
 import Simulator.Event;
+import Simulator.Send_Receive_Event;
+import Simulator.Simulator;
 
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Node {
@@ -108,12 +111,13 @@ public class Node {
 
     ///////////////////     Fill later      ////////////
 
-    public void Send() {
+    public void Send(Link link, EventType eventType) {
 
     }
 
-    public void Receive() {
+    public void Receive(Link link, EventType eventType) {  ///Eventi direk receiveBufferdan çek!!!!
         /////  if this is the destination   ////
+
                 /////   if interest received
 
                 /////    if data received
@@ -124,14 +128,13 @@ public class Node {
     public void Initialize_Interest(double time, Prefix prefix) {
         System.out.println("Node: "+ this.ID + " at: " + time + " Prefix: " +  prefix.getPrefixName() + " size: "+prefix.getData().getSize());
         //System.out.println(Arrays.toString(servedPrefixes.toArray()));
-
         if(servedPrefixes.contains(prefix.getPrefixName())) {
-            createSendEvents(prefix, this.ID, prefix.getData().getOwner()/1024 + 1);
+            createInterestSendEvents(time,prefix, this.ID, prefix.getData().getSize()/1024 + 1, null);
             return;
         }
 
         ArrayList<Integer> sources = rib.getNodeListofPrefix(prefix);
-        System.out.println(prefix.getPrefixName() + " " +Arrays.toString(sources.toArray()));
+        //System.out.println(prefix.getPrefixName() + " " +Arrays.toString(sources.toArray()));
 
         PriorityQueue<SimPath> allPaths = new PriorityQueue<>();
         for (int i = 0; i< sources.size(); i++) {
@@ -144,14 +147,56 @@ public class Node {
         SimPath kingPath = allPaths.poll();
         SimPath queenPath = allPaths.poll();
         SimPath heirPath = allPaths.poll();
+                                             /// #of interest events are inverse proportionally distributed
+        double kcost = kingPath.getCost();   /// a*kcost = b*qcost = c*hcost = k
+        double qcost = queenPath.getCost();  /// a + b + c = totalPack
+        double hcost = heirPath.getCost();   /// k/kcost + k/qcost + k/hcost = totalPack
+                                             /// k(qcost*hcost) + k(kcost*hcost) + k(kcost*qcost) = totalPack
 
-        System.out.print("King: " +kingPath.toString() + "\n" +
-                        "Queen: " +queenPath.toString() + "\n"+
-                        "Heir: "  +heirPath.toString());
+        int totalPackets = prefix.getData().getSize()/1024 + 1;
+        double k = totalPackets*kcost*qcost*hcost / (qcost*hcost + kcost*hcost + kcost*qcost);
+
+        int kpackets = (int) Math.round(k/kcost);
+        int qpackets = (int) Math.round(k/qcost);
+        int hpackets = totalPackets - kpackets - qpackets;
+
+        if(hpackets < 0) {
+            hpackets = 0;
+        }
+
+        if(hpackets > qpackets){
+            qpackets = hpackets;
+            hpackets = 0;
+        }
+        //System.out.println("Total packet: " + totalPackets + " kpac " + kpackets + " qpack " + qpackets + " hpack " + hpackets);
+
+        createInterestSendEvents(time,prefix, kingPath.getLast(),kpackets, kingPath);
+        createInterestSendEvents(time,prefix, queenPath.getLast(),qpackets, queenPath);
+        createInterestSendEvents(time,prefix, heirPath.getLast(),hpackets, heirPath);
 
     }
 
-    public void Initialize_Data(double time, Prefix prefix, int destinationID, int pathID) {
+    public void addInitEvents() {
+        for (PriorityQueue queue : sendBuffers.values()) {
+            if(!queue.isEmpty()) {
+                Event e = (Event) queue.peek();
+                Simulator.eventQueue.add(e);
+            }
+        }
+    }
+
+    public void Initialize_Data(double time, Prefix prefix, int destNodeID, SimPath path) {
+        SimPath reversePath = new SimPath(path); ///pathi kopyala koy her zaman
+        reversePath.setReverse();
+
+        Packet packet = new Packet(time, PacketType.DATA_PACKET, reversePath);  /// random service time eklenebilir
+        packet.setSourceNodeID(this.ID);   ///   TODO:: put all those variables in an initialization method or make a new constructor for Packet
+        packet.setDestinationNodeID(destNodeID);
+        packet.setPrefix(prefix);
+
+        int nextHopID = reversePath.nextNodeID(this.ID);
+        Event sendEvent = new Send_Receive_Event(time, EventType.SEND_DATA, this.ID, nextHopID,packet);
+        sendBuffers.get(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID))).add(sendEvent);
 
     }
 
@@ -160,11 +205,43 @@ public class Node {
         receiveBuffers.put(link2, new PriorityQueue<>());
     }
 
-    private void createSendEvents(Prefix p, int destNodeID, int numOfEvents){
-        if(destNodeID == this.ID){
-
-        } else {
-
-        }
+    public void addToSendBuffer(Link link, Event event){
+        sendBuffers.get(link).add(event);
     }
+
+    public void addToReceiveBuffer(Link link, Event event) {
+        receiveBuffers.get(link).add(event);
+    }
+
+    private void createInterestSendEvents(double time, Prefix prefix, int destNodeID, int numOfEvents, SimPath path){
+        if(destNodeID == this.ID){
+            return;
+        } else {
+            System.out.println("At time: " + time + " " +prefix.getPrefixName() +  " from " + destNodeID + " # " + numOfEvents +" " + path.toString());
+
+            for(int i = 0 ; i< numOfEvents ; i++) {
+                int nextHopID = path.nextNodeID(this.ID);
+
+                Packet packet = new Packet(time, PacketType.INTEREST_PACKET, new SimPath(path)); ///pathi kopyala koy
+                packet.setSourceNodeID(this.ID);   ///   TODO:: put all those variables in an initialization method or make a new constructor for Packet
+                packet.setDestinationNodeID(destNodeID);
+                packet.setPrefix(prefix);
+
+                Event sendEvent = new Send_Receive_Event(time, EventType.SEND_INTEREST, this.ID, nextHopID,packet);
+                sendBuffers.get(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID))).add(sendEvent);
+            }
+        }
+
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Node)) return false;
+        Node newnode = (Node) o;
+        return this.ID == newnode.getID();
+    }
+
+
+
 }

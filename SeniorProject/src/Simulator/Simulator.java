@@ -7,7 +7,6 @@ import kPath.Path;
 
 import kPath.shortestpaths.YenTopKShortestPathsAlg;
 
-import java.security.SecureRandom;
 import java.util.*;
 
 public class Simulator {
@@ -15,7 +14,7 @@ public class Simulator {
     public static Map<Pair<Integer, Integer>, Link> networkLinks = new HashMap();
     public static Map<String, Prefix> networkPrefixes = new HashMap<>();
     public static ArrayList<Packet> allPackets = new ArrayList<>();
-    public static PriorityQueue<Event> eventQueue;
+    public static PriorityQueue<Event> eventQueue = new PriorityQueue<>();
 
     private static double MAX_SIM_TIME;
     private static double SimTime;  //milisecond
@@ -57,14 +56,14 @@ public class Simulator {
                 if(n.getID() != m.getID()){
                     List<Path> shortest_paths_list = yenAlg.getShortestPaths(
                             graph.getVertex(n.getID()), graph.getVertex(m.getID()),pathDegree);
-                    addPath(shortest_paths_list, n.getID(), m.getID());
+                    fillFIBtable(shortest_paths_list, n.getID(), m.getID());
                 }
             }
         }
         //networkNodes.get(7).getFib().FIB_toString();
     }
 
-    public static void addPath(List<Path> paths, int source, int target ) {
+    public static void fillFIBtable(List<Path> paths, int source, int target ) {
         Node n = networkNodes.get(source);
         SimPath path1 = new SimPath(paths.get(0).getPathList(), paths.get(0).getWeight());
         SimPath path2 = new SimPath(paths.get(1).getPathList(),paths.get(1).getWeight());
@@ -104,9 +103,15 @@ public class Simulator {
                     networkNodes.get(randomNode.nextInt(networkNodes.size())).
                             Initialize_Interest(randomTime.nextInt((int)MAX_SIM_TIME),
                                     networkPrefixes.get("prefix"+(randomPrefix.nextInt(networkPrefixes.size()-1)+1)));
-            //System.out.println(randomNode.nextInt(networkNodes.size()));
             numEvent--;
         }
+
+        for (Node node: networkNodes.values()) {
+            node.addInitEvents();
+        }
+
+        System.out.println(eventQueue.size());
+
 
     }
 }

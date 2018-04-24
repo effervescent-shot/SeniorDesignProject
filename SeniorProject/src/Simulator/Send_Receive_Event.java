@@ -3,16 +3,17 @@ package Simulator;
 import Enums.EventType;
 import Helper.Pair;
 import Network.Link;
+import Network.Packet;
 
 import static Enums.EventType.*;
 
 public class Send_Receive_Event extends Event{
     private int from;    /// A-->B from A to B   //// B<--A to B from A
     private int to;
-    private Package aPackage;
+    private Packet aPackage;
     private Link aLink;
 
-    Send_Receive_Event(long time, EventType eventType, int from, int to, Package pack, Link link) {
+    public Send_Receive_Event(double time, EventType eventType, int from, int to, Packet pack) {
         super(time, eventType);
         this.from = from;
         this.to = to;
@@ -36,11 +37,11 @@ public class Send_Receive_Event extends Event{
         this.to = to;
     }
 
-    public Package getaPackage() {
+    public Packet getaPackage() {
         return aPackage;
     }
 
-    public void setaPackage(Package aPackage) {
+    public void setaPackage(Packet aPackage) {
         this.aPackage = aPackage;
     }
 
@@ -56,7 +57,7 @@ public class Send_Receive_Event extends Event{
     @Override
     public void runEvent () {
         if(this.getEventType() == SEND_INTEREST) {
-
+                //Linki gönder, interest mi data mı onu gönder
         }
 
         if(this.getEventType() == SEND_DATA) {
@@ -70,5 +71,11 @@ public class Send_Receive_Event extends Event{
         if(this.getEventType() == RECEIVE_DATA) {
 
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Event type: "+super.getEventType()+ " at time "+ super.getTime() +
+                " from " + from + " to " + to + "\n";
     }
 }

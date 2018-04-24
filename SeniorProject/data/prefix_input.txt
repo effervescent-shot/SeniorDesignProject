@@ -1,9 +1,9 @@
 8
-prefix1 1000
-prefix2 2000
-prefix3 3000
-prefix4 4000
-prefix5 5000
-prefix6 6000
-prefix7 7000
-prefix8 8000
+prefix1 10000
+prefix2 20000
+prefix3 30000
+prefix4 40000
+prefix5 50000
+prefix6 60000
+prefix7 70000
+prefix8 80000

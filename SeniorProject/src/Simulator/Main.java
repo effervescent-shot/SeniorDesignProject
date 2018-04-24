@@ -14,7 +14,8 @@ public class Main {
         DemandReader dr = new DemandReader("data/demand_input.txt",sim);
 
         sim.runSimulation(graph, 3);
-        sim.initialization(5,13, 17,19);
+        sim.initialization(20,13, 17,19);
+
 
     }
 

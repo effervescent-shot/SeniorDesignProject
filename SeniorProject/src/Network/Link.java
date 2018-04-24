@@ -67,5 +67,11 @@ public class Link {
         deltaTime += packetSize/capacity;
     }
 
-
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Link)) return false;
+        Link linko = (Link) o;
+        return this.firstNode.equals(linko.getFirstNode()) &&
+                this.secondNode.equals(linko.getSecondNode());
+    }
 }

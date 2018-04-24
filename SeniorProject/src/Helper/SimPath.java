@@ -19,6 +19,14 @@ public class SimPath implements Comparable{
         this.cost = cost;
     }
 
+    /*
+    Copy consturctor
+     */
+    public SimPath (SimPath simPath){
+        this.cost = simPath.getCost();
+        this.path = new ArrayList<>(simPath.getPath());
+    }
+
     public void setReverse(){
         ArrayList<Integer> reversePath= new ArrayList<Integer>();
         for(int i = path.size(); i>0;i--){
@@ -68,6 +76,10 @@ public class SimPath implements Comparable{
 
     public void addPath(int nodeID) {
         this.path.add(nodeID);
+    }
+
+    public int getLast() {
+        return this.path.get(path.size()-1);
     }
 
     @Override
