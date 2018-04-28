@@ -9,6 +9,8 @@ import kPath.shortestpaths.YenTopKShortestPathsAlg;
 
 import java.util.*;
 
+import static Enums.EventType.RUN_DIJKSTRA;
+
 public class Simulator {
     public static Map<Integer, Node> networkNodes = new HashMap();
     public static Map<Pair<Integer, Integer>, Link> networkLinks = new HashMap();
@@ -30,19 +32,19 @@ public class Simulator {
 
 
     public void runSimulation(Graph graph, int pathDegree){
-        buildPaths(graph, pathDegree);
+        //buildPaths(graph, pathDegree);
 
         ///////// initialize initial interests //////////
         //
-//        while(!eventQueue.isEmpty() && SimTime < MAX_SIM_TIME) {
-//            Event e = (Event)eventQueue.poll();
-//            if(e.getEventType() == RUN_DIJKSTRA) {
-//                updateEdgeCosts(graph);
-//                buildPaths(graph, pathDegree);
-//            } else {
-//                e.runEvent();
-//            }
-//        }
+        while(!eventQueue.isEmpty() && SimTime < MAX_SIM_TIME) {
+            Event e = (Event)eventQueue.poll();
+            if(e.getEventType() == RUN_DIJKSTRA) {
+                updateEdgeCosts(graph);
+                buildPaths(graph, pathDegree);
+            } else {
+                e.runEvent();
+            }
+        }
 
 
     }
@@ -110,7 +112,7 @@ public class Simulator {
             node.addInitEvents();
         }
 
-        System.out.println(eventQueue.size());
+        //System.out.println(eventQueue.size());
 
 
     }

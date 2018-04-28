@@ -10,15 +10,15 @@ import static Enums.EventType.*;
 public class Send_Receive_Event extends Event{
     private int from;    /// A-->B from A to B   //// B<--A to B from A
     private int to;
-    private Packet aPackage;
-    private Link aLink;
+    private Packet packet;
+    private Link link;
 
     public Send_Receive_Event(double time, EventType eventType, int from, int to, Packet pack) {
         super(time, eventType);
         this.from = from;
         this.to = to;
-        this.aPackage = pack;
-        this.aLink = Simulator.networkLinks.get(new Pair<Integer,Integer>(from,to));
+        this.packet = pack;
+        this.link = Simulator.networkLinks.get(new Pair<Integer,Integer>(from,to));
     }
 
     public int getFrom() {
@@ -37,45 +37,48 @@ public class Send_Receive_Event extends Event{
         this.to = to;
     }
 
-    public Packet getaPackage() {
-        return aPackage;
+    public Packet getPacket() {
+        return packet;
     }
 
-    public void setaPackage(Packet aPackage) {
-        this.aPackage = aPackage;
+    public void setPacket(Packet packet) {
+        this.packet = packet;
     }
 
-    public Link getaLink() {
-        return aLink;
+    public Link getLink() {
+        return link;
     }
 
-    public void setaLink(Link aLink) {
-        this.aLink = aLink;
+    public void setLink(Link link) {
+        this.link = link;
     }
 
     ////////Fill later //////////////
     @Override
     public void runEvent () {
         if(this.getEventType() == SEND_INTEREST) {
-                //Linki gönder, interest mi data mı onu gönder
+            //System.out.println("Who let the dogs out!");
+            //Simulator.networkNodes.get(this.from).Send(this.link, this.getEventType());
         }
 
-        if(this.getEventType() == SEND_DATA) {
-
-        }
-
-        if(this.getEventType() == RECEIVE_INTEREST) {
+        else if(this.getEventType() == SEND_DATA) {
 
         }
 
-        if(this.getEventType() == RECEIVE_DATA) {
+        else if(this.getEventType() == RECEIVE_INTEREST) {
+
+        }
+
+        else if(this.getEventType() == RECEIVE_DATA) {
+
+        } else {
 
         }
     }
 
     @Override
     public String toString() {
-        return "Event type: "+super.getEventType()+ " at time "+ super.getTime() +
+        return "Event type: "+this.getEventType()+ " at time "+ this.getTime() +
                 " from " + from + " to " + to + "\n";
     }
 }

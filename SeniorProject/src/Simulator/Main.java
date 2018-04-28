@@ -13,9 +13,9 @@ public class Main {
         ServeReader sr = new ServeReader("data/serve_input.txt",sim);
         DemandReader dr = new DemandReader("data/demand_input.txt",sim);
 
-        sim.runSimulation(graph, 3);
+        sim.buildPaths(graph,3);
         sim.initialization(20,13, 17,19);
-
+        sim.runSimulation(graph, 3);
 
     }
 
