@@ -38,6 +38,7 @@ public class Simulator {
         //
         while(!eventQueue.isEmpty() && SimTime < MAX_SIM_TIME) {
             Event e = (Event)eventQueue.poll();
+
             if(e.getEventType() == RUN_DIJKSTRA) {
                 updateEdgeCosts(graph);
                 buildPaths(graph, pathDegree);
@@ -103,7 +104,7 @@ public class Simulator {
 
         while (numEvent > 0) {
                     networkNodes.get(randomNode.nextInt(networkNodes.size())).
-                            Initialize_Interest(randomTime.nextInt((int)MAX_SIM_TIME),
+                            Initialize_Interest( randomTime.nextInt((int)MAX_SIM_TIME),
                                     networkPrefixes.get("prefix"+(randomPrefix.nextInt(networkPrefixes.size()-1)+1)));
             numEvent--;
         }

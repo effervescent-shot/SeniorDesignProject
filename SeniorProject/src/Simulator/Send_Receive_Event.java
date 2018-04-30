@@ -56,22 +56,36 @@ public class Send_Receive_Event extends Event{
     ////////Fill later //////////////
     @Override
     public void runEvent () {
+        //System.out.print("Event: time: "+this.getTime()+" from: "+this.from+" to: "+this.to+" path: "+this.getPacket().getSimPath().toString());
         if(this.getEventType() == SEND_INTEREST) {
             //System.out.println("Who let the dogs out!");
-            //Simulator.networkNodes.get(this.from).Send(this.link, this.getEventType());
+            Simulator.networkNodes.get(this.from).Send(this.link, this.getEventType());
+            System.out.println(" Packet type: send interest");
         }
 
         else if(this.getEventType() == SEND_DATA) {
+            //System.out.println("Who let the dogs out! -----------");
+            Simulator.networkNodes.get(this.from).Send(this.link, this.getEventType());
+            System.out.println(" Packet type: send data");
+
 
         }
 
         else if(this.getEventType() == RECEIVE_INTEREST) {
+            //System.out.println("Who who who!");
+            Simulator.networkNodes.get(this.to).Receive(this.link, this);
+            System.out.println(" Packet type: receive interest");
 
         }
 
         else if(this.getEventType() == RECEIVE_DATA) {
+            //System.out.println("Who who who!-----------");
+            Simulator.networkNodes.get(this.to).Receive(this.link, this);
+            System.out.println(" Packet type: receive data");
 
-        } else {
+        }
+
+        else {
 
         }
     }

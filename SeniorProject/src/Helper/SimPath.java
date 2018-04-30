@@ -84,7 +84,7 @@ public class SimPath implements Comparable{
 
     @Override
     public String toString() {
-        return "SimPath{" +  "cost=" + cost + "  " + Arrays.toString(path.toArray()) + "\n";
+        return "SimPath {" +  "cost=" + cost + "  array : " + Arrays.toString(path.toArray()) + "}";
     }
 
     @Override

@@ -112,34 +112,76 @@ public class Node {
     ///////////////////     Fill later      ////////////
 
     public void Send(Link link, EventType eventType) {
+
         if(eventType == EventType.SEND_INTEREST) {
             Send_Receive_Event event = (Send_Receive_Event) sendBuffers.get(link).poll();
+            if(event!=null) {
+                double delay = 1000 * event.getPacket().getInterestPacketSize() / link.getCapacity(); //this yield second we want milisecond
+                event.setEventType(EventType.RECEIVE_INTEREST); // turn the event into receive event
+                event.getLink().augmentLoad(event.getPacket().getInterestPacketSize()); // update the link load
+                event.setTime(event.getTime() + delay);  // set receive time
 
-            double delay = 1000 * event.getPacket().getInterestPacketSize() / link.getCapacity(); //this yield second we want milisecond
-
-            event.setEventType(EventType.RECEIVE_INTEREST); // turn the event into receive event
-            event.getLink().augmentLoad(event.getPacket().getInterestPacketSize()); // update the link load
-            event.setTime(event.getTime() + delay);  // set receive time
-
-
-
-            addDelayToBufferQueue(link, delay);  //add delay to all events in the buffer
+                Simulator.eventQueue.add(event); // receive event is put in the global queue
+                addDelayToBufferQueue(link, event.getTime()); //second element of the queue
+            }
         }
 
         if(eventType == EventType.SEND_DATA) {
+            Send_Receive_Event event = (Send_Receive_Event) sendBuffers.get(link).poll();
+            if(event!=null){
+               double delay = 1000 * event.getPacket().getDataPacketSize() / link.getCapacity();
+               event.setEventType(EventType.RECEIVE_DATA);
+               event.getLink().augmentLoad(event.getPacket().getDataPacketSize());
+               event.setTime(event.getTime()+delay);
 
+               Simulator.eventQueue.add(event);
+                addDelayToBufferQueue(link, event.getTime());
+            }
         }
 
     }
 
-    public void Receive(Link link, EventType eventType) {  ///Eventi direk receiveBufferdan çek!!!!
+    public void Receive(Link link, Event event) {  ///Eventi direk receiveBufferdan çek!!!!
+
+        Send_Receive_Event e = (Send_Receive_Event) event;
         /////  if this is the destination   ////
+        if(e.getPacket().getDestinationNodeID() == this.ID) {
+            /////   if interest received
+                if(e.getEventType() == EventType.RECEIVE_INTEREST) {
+                    if(servedPrefixes.contains(e.getPacket().getPrefix().getPrefixName())) {
+                        Initialize_Data(e.getTime(),e.getPacket().getPrefix(),e.getPacket().getSourceNodeID(),e.getPacket().getSimPath());  //service time may be added as random time
+                        e.getPacket().terminatePacket(e.getTime());
 
-                /////   if interest received
+                    }
+                }
+            /////    if data received
+                else if(e.getEventType() == EventType.RECEIVE_DATA) {
+                        ///DO NOTHING -- Log all
+                }
+        } else {
+            ///   if this is not the destination //////
+            if(e.getEventType() == EventType.RECEIVE_INTEREST) {
+                int nextHopID = e.getPacket().getSimPath().nextNodeID(this.ID);
+                e.setEventType(EventType.SEND_INTEREST);
+                e.setLink(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID)));
+                e.setFrom(this.ID);
+                e.setTo(nextHopID);
+                sendBuffers.get(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID))).add(e);
+            }
+            /////    if data received
+            else if(e.getEventType() == EventType.RECEIVE_DATA) {
+                int nextHopID = e.getPacket().getSimPath().nextNodeID(this.ID);
+                e.setEventType(EventType.SEND_DATA);
+                e.setLink(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID)));
+                e.setFrom(this.ID);
+                e.setTo(nextHopID);
+                sendBuffers.get(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID))).add(e);
+            }
 
-                /////    if data received
+        }
 
-        ///   if this is not the destination //////
+
+
     }
 
     public void Initialize_Interest(double time, Prefix prefix) {
@@ -193,8 +235,13 @@ public class Node {
 
     }
 
-    private void addDelayToBufferQueue(Link link, double delay) {
+    private void addDelayToBufferQueue(Link link, double time) {
         //if buffer is not empyty then add delay to each element
+        if(!sendBuffers.get(link).isEmpty()){
+            Event e = (Event )sendBuffers.get(link).peek();
+            e.setTime(time);
+            Simulator.eventQueue.add(e);
+        }
         //then add the event into to Simulator queue
     }
 
@@ -218,16 +265,20 @@ public class Node {
 
         int nextHopID = reversePath.nextNodeID(this.ID);
         Event sendEvent = new Send_Receive_Event(time, EventType.SEND_DATA, this.ID, nextHopID,packet);
+        if(sendBuffers.get(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID))).isEmpty()) {
+            Simulator.eventQueue.add(sendEvent);
+        }
         sendBuffers.get(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID))).add(sendEvent);
 
     }
 
     public void createLinkBuffers (Link link1, Link link2) {
         sendBuffers.put(link1, new PriorityQueue<>());
-        //receiveBuffers.put(link2, new PriorityQueue<>());  // ATTENTION!!! :: receiveBuffers have reverse links
+        receiveBuffers.put(link2, new PriorityQueue<>());  // ATTENTION!!! :: receiveBuffers have reverse links
     }
 
     public void addToSendBuffer(Link link, Event event){
+        //System.out.println(sendBuffers.get(link));
         sendBuffers.get(link).add(event);
     }
 

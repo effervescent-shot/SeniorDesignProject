@@ -69,8 +69,8 @@ public class TopologyReader {
                 simulator.networkLinks.put(edgePair1, direc1);
                 simulator.networkLinks.put(edgePair2, direc2);
 
-                //simulator.networkNodes.get(first.getID()).createLinkBuffers(direc1,direc2);
-                //simulator.networkNodes.get(second.getID()).createLinkBuffers(direc2, direc1);
+                simulator.networkNodes.get(first.getID()).createLinkBuffers(direc1,direc2);
+                simulator.networkNodes.get(second.getID()).createLinkBuffers(direc2, direc1);
 
             }
 
