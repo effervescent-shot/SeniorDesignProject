@@ -23,6 +23,8 @@ public class Node {
     ArrayList<String> servedPrefixes;
     ArrayList<String> demandedPrefixes;
     private Map<Link,PriorityQueue<Event>> sendBuffers;
+    private Map<Link,Double> sendBufferTime;
+
     private Map<Link,PriorityQueue<Event>> receiveBuffers;
 
     private double NodeTime = 0;
@@ -35,6 +37,7 @@ public class Node {
         demandedPrefixes = new ArrayList<String>();
         sendBuffers = new HashMap<Link,PriorityQueue<Event>>();
         receiveBuffers = new HashMap<Link,PriorityQueue<Event>>();
+        sendBufferTime = new HashMap<>();
      }
 
     public Node(int ID, String name) {
@@ -46,6 +49,7 @@ public class Node {
         demandedPrefixes = new ArrayList<String>();
         sendBuffers = new HashMap<Link,PriorityQueue<Event>>();
         receiveBuffers = new HashMap<Link,PriorityQueue<Event>>();
+        sendBufferTime = new HashMap<>();
     }
 
     public int getID() {
@@ -120,7 +124,7 @@ public class Node {
                 event.setEventType(EventType.RECEIVE_INTEREST); // turn the event into receive event
                 event.getLink().augmentLoad(event.getPacket().getInterestPacketSize()); // update the link load
                 event.setTime(event.getTime() + delay);  // set receive time
-
+                sendBufferTime.put(link,event.getTime());
                 Simulator.eventQueue.add(event); // receive event is put in the global queue
                 addDelayToBufferQueue(link, event.getTime()); //second element of the queue
             }
@@ -133,7 +137,7 @@ public class Node {
                event.setEventType(EventType.RECEIVE_DATA);
                event.getLink().augmentLoad(event.getPacket().getDataPacketSize());
                event.setTime(event.getTime()+delay);
-
+               sendBufferTime.put(link,event.getTime());
                Simulator.eventQueue.add(event);
                 addDelayToBufferQueue(link, event.getTime());
             }
@@ -166,6 +170,10 @@ public class Node {
                 e.setLink(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID)));
                 e.setFrom(this.ID);
                 e.setTo(nextHopID);
+                if(sendBuffers.get(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID))).isEmpty()) {
+
+                    Simulator.eventQueue.add(e);
+                }
                 sendBuffers.get(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID))).add(e);
             }
             /////    if data received
@@ -175,6 +183,14 @@ public class Node {
                 e.setLink(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID)));
                 e.setFrom(this.ID);
                 e.setTo(nextHopID);
+                if(sendBuffers.get(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID))).isEmpty()) {
+                    if(sendBufferTime.get(new Pair<>(this.ID, nextHopID))!=null){
+                        if(sendBufferTime.get(new Pair<>(this.ID, nextHopID))>e.getTime()){
+                            e.setTime(sendBufferTime.get(new Pair<>(this.ID, nextHopID)));
+                        }
+                    }
+                    Simulator.eventQueue.add(e);
+                }
                 sendBuffers.get(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID))).add(e);
             }
 
@@ -290,7 +306,7 @@ public class Node {
         if(destNodeID == this.ID){
             return;
         } else {
-            //System.out.println("At time: " + time + " " +prefix.getPrefixName() +  " from " + destNodeID + " # " + numOfEvents +" " + path.toString());
+            System.out.println("At time: " + time + " " +prefix.getPrefixName() +  " from " + destNodeID + " # " + numOfEvents +" " + path.toString());
 
             for(int i = 0 ; i< numOfEvents ; i++) {
                 int nextHopID = path.nextNodeID(this.ID);

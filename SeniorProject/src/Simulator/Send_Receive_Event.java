@@ -56,7 +56,7 @@ public class Send_Receive_Event extends Event{
     ////////Fill later //////////////
     @Override
     public void runEvent () {
-        //System.out.print("Event: time: "+this.getTime()+" from: "+this.from+" to: "+this.to+" path: "+this.getPacket().getSimPath().toString());
+        System.out.print("Event: time: "+this.getTime()+" from: "+this.from+" to: "+this.to+" path: "+this.getPacket().getSimPath().toString());
         if(this.getEventType() == SEND_INTEREST) {
             //System.out.println("Who let the dogs out!");
             Simulator.networkNodes.get(this.from).Send(this.link, this.getEventType());

@@ -83,6 +83,18 @@ public class Simulator {
         }
     }
 
+    public int getRandomNodeID(){
+        return (int)Math.floor(0+(networkNodes.size()-0)*randomNode.nextDouble());
+    }
+    public int getRandomPrefixID(){
+        return (int)Math.floor(0+(networkPrefixes.size()-0)*randomPrefix.nextDouble())+1;
+    }
+
+    public int getRandomStartTime(){
+        return (int)Math.floor(0+(400-0)*randomTime.nextDouble());
+    }
+
+
     public void initialization(int numEvent, long timeSeed, long nodeSeed, long prefixSeed) {
         randomTime = new Random();
         randomTime.setSeed(timeSeed);
@@ -103,9 +115,9 @@ public class Simulator {
 
 
         while (numEvent > 0) {
-                    networkNodes.get(randomNode.nextInt(networkNodes.size())).
-                            Initialize_Interest( randomTime.nextInt((int)MAX_SIM_TIME),
-                                    networkPrefixes.get("prefix"+(randomPrefix.nextInt(networkPrefixes.size()-1)+1)));
+                    networkNodes.get(getRandomNodeID()).
+                            Initialize_Interest( getRandomStartTime(),
+                                    networkPrefixes.get("prefix"+getRandomPrefixID()));
             numEvent--;
         }
 
