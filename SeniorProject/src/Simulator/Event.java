@@ -7,6 +7,7 @@ public class Event implements Comparable {
     private double time;//In milisecond
     private EventType eventType;
 
+
     public Event(){
 
     }

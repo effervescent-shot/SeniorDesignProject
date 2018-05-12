@@ -76,10 +76,16 @@ public class Packet {
         this.packetType = packetType;
     }
 
-    public static int getInterestPacketSize() { return InterestPacketSize; }
+    private static int getInterestPacketSize() { return InterestPacketSize; }
 
-    public static int getDataPacketSize() { return DataPacketSize; }
+    private static int getDataPacketSize() { return DataPacketSize; }
 
+    public int getPacketSize() {
+        if(this.packetType == PacketType.INTEREST_PACKET)
+            return getInterestPacketSize();
+
+        return getDataPacketSize();
+    }
     public void terminatePacket(double terminationTime) {
         this.TerminationTime = terminationTime;
         Simulator.allPackets.add(this);

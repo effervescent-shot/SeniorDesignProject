@@ -10,18 +10,32 @@ public class Init_Interest_Data_Event extends Event {
     private int sourceID;
     private int destinationID = -1;
     private Prefix prefix;
+    private int nodeID;
 
-    Init_Interest_Data_Event (long time, EventType eventType, int source,  Prefix prefix) {
+    public Init_Interest_Data_Event(){
+
+    }
+
+    public Init_Interest_Data_Event (long time, EventType eventType, int source,  Prefix prefix) {
         super(time, eventType);
         this.sourceID = source;
         this.prefix = prefix;
     }
 
-    Init_Interest_Data_Event (long time, EventType eventType, int source, int destination,  Prefix prefix) {
+    public Init_Interest_Data_Event (long time, EventType eventType, int source, int destination,  Prefix prefix) {
        super(time, eventType);
        this.sourceID = source;
        this.destinationID = destination;
        this.prefix = prefix;
+    }
+
+
+    public int getNodeID() {
+        return nodeID;
+    }
+
+    public void setNodeID(int nodeID) {
+        this.nodeID = nodeID;
     }
 
     public int getSourceID() { return sourceID; }
@@ -40,6 +54,10 @@ public class Init_Interest_Data_Event extends Event {
     @Override
     public void runEvent () {
         if(this.getEventType() == INITIALIZE_INTEREST) {
+            //bufferlara ekle
+            Simulator.networkNodes.get(getNodeID()).
+                    Initialize_Interest( getTime(),
+                            getPrefix());
 
         }
 

@@ -1,4 +1,5 @@
 package Simulator;
+import Enums.EventType;
 import ICN.Prefix;
 import Network.*;
 import Helper.*;
@@ -90,8 +91,8 @@ public class Simulator {
         return (int)Math.floor(0+(networkPrefixes.size()-0)*randomPrefix.nextDouble())+1;
     }
 
-    public int getRandomStartTime(){
-        return (int)Math.floor(0+(400-0)*randomTime.nextDouble());
+    public double getRandomStartTime(){
+        return Math.floor(0+(MAX_SIM_TIME-0)*randomTime.nextDouble());
     }
 
 
@@ -115,18 +116,31 @@ public class Simulator {
 
 
         while (numEvent > 0) {
-                    networkNodes.get(getRandomNodeID()).
+                   /* networkNodes.get(getRandomNodeID()).
                             Initialize_Interest( getRandomStartTime(),
-                                    networkPrefixes.get("prefix"+getRandomPrefixID()));
+                                    networkPrefixes.get("prefix"+getRandomPrefixID()));*/
+
+                    init( getRandomNodeID(),getRandomStartTime(),
+                            networkPrefixes.get("prefix"+getRandomPrefixID()));
             numEvent--;
         }
 
-        for (Node node: networkNodes.values()) {
-            node.addInitEvents();
-        }
+//        for (Node node: networkNodes.values()) {
+//            node.addInitEvents();
+//        }
+
+
 
         //System.out.println(eventQueue.size());
 
 
+    }
+    public void init(int nodeID,double time, Prefix prefix){
+        Init_Interest_Data_Event e = new Init_Interest_Data_Event();
+        e.setTime(time);
+        e.setPrefix(prefix);
+        e.setNodeID(nodeID);
+        e.setEventType(EventType.INITIALIZE_INTEREST);
+        Simulator.eventQueue.add(e);
     }
 }
