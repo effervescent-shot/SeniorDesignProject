@@ -9,6 +9,7 @@ import kPath.Path;
 import kPath.shortestpaths.YenTopKShortestPathsAlg;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 import static Enums.EventType.RUN_DIJKSTRA;
 
@@ -41,13 +42,15 @@ public class Simulator {
             Event e = (Event)eventQueue.poll();
 
             if(e.getEventType() == RUN_DIJKSTRA) {
-                updateEdgeCosts(graph);
+                //updateEdgeCosts(graph);
                 buildPaths(graph, pathDegree);
             } else {
                 e.runEvent();
             }
         }
 
+        ArrayList<Double> link_6_1= Simulator.networkLinks.get(new Pair<>(6,1)).getLinkLoad();
+        System.out.println(Arrays.toString(link_6_1.toArray()));
 
     }
 
@@ -60,19 +63,28 @@ public class Simulator {
                 if(n.getID() != m.getID()){
                     List<Path> shortest_paths_list = yenAlg.getShortestPaths(
                             graph.getVertex(n.getID()), graph.getVertex(m.getID()),pathDegree);
-                    fillFIBtable(shortest_paths_list, n.getID(), m.getID());
+                    fillFIBtable(shortest_paths_list, n.getID(), m.getID(), pathDegree);
                 }
             }
         }
         //networkNodes.get(7).getFib().FIB_toString();
     }
 
-    public static void fillFIBtable(List<Path> paths, int source, int target ) {
+    public static void fillFIBtable(List<Path> paths, int source, int target, int pathDegree ) {
         Node n = networkNodes.get(source);
-        SimPath path1 = new SimPath(paths.get(0).getPathList(), paths.get(0).getWeight());
-        SimPath path2 = new SimPath(paths.get(1).getPathList(),paths.get(1).getWeight());
-        SimPath path3 = new SimPath(paths.get(2).getPathList(), paths.get(2).getWeight());
-        n.setFibRow(target,path1,path2,path3);
+        if(pathDegree == 3) {
+            SimPath path1 = new SimPath(paths.get(0).getPathList(), paths.get(0).getWeight());
+            SimPath path2 = new SimPath(paths.get(1).getPathList(), paths.get(1).getWeight());
+            SimPath path3 = new SimPath(paths.get(2).getPathList(), paths.get(2).getWeight());
+            n.setFibRow(target,path1,path2,path3);
+        }
+        else if (pathDegree == 1) {
+            SimPath path1 = new SimPath(paths.get(0).getPathList(), paths.get(0).getWeight());
+            SimPath path2 = new SimPath(paths.get(0).getPathList(), paths.get(0).getWeight());
+            SimPath path3 = new SimPath(paths.get(0).getPathList(), paths.get(0).getWeight());
+            n.setFibRow(target,path1,path2,path3);
+        }
+
     }
 
     public static void updateEdgeCosts(Graph graph) {
@@ -99,42 +111,29 @@ public class Simulator {
     public void initialization(int numEvent, long timeSeed, long nodeSeed, long prefixSeed) {
         randomTime = new Random();
         randomTime.setSeed(timeSeed);
-        //randomTime.doubles(numEvent,0, MAX_SIM_TIME);
 
         randomNode = new Random();
         randomNode.setSeed(nodeSeed);
-        //randomNode.ints(numEvent,0, networkNodes.size()+1);
 
         randomPrefix = new Random();
         randomPrefix.setSeed(prefixSeed);
-        //randomPrefix.ints(numEvent,0, networkPrefixes.size()+1);
 
-//        for(int i = 1; i<10; i++) {
-//            networkNodes.get(randomNode.nextInt(networkNodes.size())).
-//                    Initialize_Interest(i,networkPrefixes.get("prefix"+(randomPrefix.nextInt(networkPrefixes.size()-1)+1)));
-//        }
 
 
         while (numEvent > 0) {
-                   /* networkNodes.get(getRandomNodeID()).
-                            Initialize_Interest( getRandomStartTime(),
-                                    networkPrefixes.get("prefix"+getRandomPrefixID()));*/
-
                     init( getRandomNodeID(),getRandomStartTime(),
                             networkPrefixes.get("prefix"+getRandomPrefixID()));
             numEvent--;
         }
 
-//        for (Node node: networkNodes.values()) {
-//            node.addInitEvents();
+//        int k = 0;
+//        while (k<1){
+            Event e = new Event(getRandomStartTime(),EventType.RUN_DIJKSTRA);
+            Simulator.eventQueue.add(e);
 //        }
 
-
-
-        //System.out.println(eventQueue.size());
-
-
     }
+
     public void init(int nodeID,double time, Prefix prefix){
         Init_Interest_Data_Event e = new Init_Interest_Data_Event();
         e.setTime(time);

@@ -1,5 +1,7 @@
 package Network;
 
+import java.util.ArrayList;
+
 public class Link {
     private int ID;
     private Node firstNode;
@@ -10,6 +12,12 @@ public class Link {
 
     private double deltaLoad = 0;
     private double deltaTime = 1;
+
+    private ArrayList<Double> linkLoad = new ArrayList<>();
+
+    public ArrayList<Double> getLinkLoad() {
+        return linkLoad;
+    }
 
     public Link(int ID, int capacity) {
         this.ID = ID;
@@ -60,6 +68,7 @@ public class Link {
 
     public void updateLoad() {
         load = deltaLoad/deltaTime;
+        linkLoad.add(load);
     }
 
     public void augmentLoad(double packetSize) {
