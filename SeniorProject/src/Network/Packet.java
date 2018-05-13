@@ -8,7 +8,7 @@ import Simulator.Simulator;
 
 public class Packet {
     private static final int InterestPacketSize = 1; //MB
-    private static final int DataPacketSize = 1024; //MB
+    private static final int DataPacketSize = 8; //MB
 
     private static long ID = 10000;
     private int sourceNodeID;

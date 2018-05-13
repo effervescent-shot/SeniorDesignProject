@@ -37,7 +37,7 @@ public class Link {
         this.ID = ID;
         this.firstNode = firstNode;
         this.secondNode = secondNode;
-        this.capacity = capacity;
+        this.capacity = capacity;  /// Mbps
         this.load = 0;
         this.cost = 1/(capacity-load);
     }
@@ -82,8 +82,8 @@ public class Link {
 
     }
 
-    public void augmentLoad(double packetSize) {
-        deltaLoad += packetSize;
+    public void augmentLoad(double packetSize) {  ///bit per second
+        deltaLoad += 1000*packetSize;
         deltaTime += 1000*packetSize/capacity;
 //        System.out.println("Node1: " + firstNode.getID() + " Node2: " + secondNode.getID() +
 //                            " DeltaLoad: " + deltaLoad + " DeltaTime: " + deltaTime +
@@ -100,7 +100,7 @@ public class Link {
 
     @Override
     public String toString() {
-        return "Link from: "+ firstNode.getID() + " to: " + secondNode.getID();
+        return "Link__"+ firstNode.getID() + "_" + secondNode.getID();
     }
 
 

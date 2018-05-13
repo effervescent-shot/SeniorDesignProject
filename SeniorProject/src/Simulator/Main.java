@@ -18,17 +18,16 @@ public class Main {
         DemandReader dr = new DemandReader("data/demand_input.txt",sim);
 
         sim.buildPaths(graph3,3);
-        sim.initialization(5000,116185, 17,19);
+        sim.initialization(10000,116185, 17,19);
         sim.runSimulation(graph3, 3);
-
-        sim.printLinkLoads("dummyName.csv");
+        sim.printLinkLoads("../vis-data/path3_1.csv");
 
         sim.resetVariables();
-        System.out.println("\n\n\n\n\n\n\n");
+
         sim.buildPaths(graph1,1);
-        sim.initialization(5000,116185, 17,19);
+        sim.initialization(10000,116185, 17,19);
         sim.runSimulation(graph1, 1);
 
-        sim.printLinkLoads("dummyName.csv");
+        sim.printLinkLoads("../vis-data/path1_1.csv");
     }
 }
