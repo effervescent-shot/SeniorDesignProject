@@ -298,7 +298,7 @@ public class Node {
         if(destNodeID == this.ID){
             return;
         } else {
-            System.out.println("At time: " + time + " " +prefix.getPrefixName() +  " from " + destNodeID + " # of events " + numOfEvents +" " + path.toString());
+            //System.out.println("At time: " + time + " " +prefix.getPrefixName() +  " from " + destNodeID + " # of events " + numOfEvents +" " + path.toString());
 
             for(int i = 0 ; i< numOfEvents ; i++) {
                 int nextHopID = path.nextNodeID(this.ID);

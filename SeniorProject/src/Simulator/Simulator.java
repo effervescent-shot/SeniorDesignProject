@@ -3,11 +3,15 @@ import Enums.EventType;
 import ICN.Prefix;
 import Network.*;
 import Helper.*;
+import com.sun.org.apache.xml.internal.utils.SystemIDResolver;
 import kPath.Graph;
 import kPath.Path;
 
 import kPath.shortestpaths.YenTopKShortestPathsAlg;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -26,6 +30,8 @@ public class Simulator {
     private static Random randomTime;
     private static Random randomNode;
     private static Random randomPrefix;
+
+    private static final String outputFile = "out1.cvs";
 
     public Simulator(double max_sim_time){
         this.MAX_SIM_TIME = max_sim_time;
@@ -48,9 +54,6 @@ public class Simulator {
                 e.runEvent();
             }
         }
-
-        ArrayList<Double> link_6_1= Simulator.networkLinks.get(new Pair<>(6,1)).getLinkLoad();
-        System.out.println(Arrays.toString(link_6_1.toArray()));
 
     }
 
@@ -91,6 +94,7 @@ public class Simulator {
         for (Link l: networkLinks.values() ) {
             l.updateLoad();
             l.resetLoad();
+            //System.out.println(l.getCost());
             graph.vertexPairWeightIndex.put(
                     new Pair<Integer, Integer>(l.getFirstNode().getID(),l.getSecondNode().getID()),l.getCost());
         }
@@ -104,7 +108,7 @@ public class Simulator {
     }
 
     public double getRandomStartTime(){
-        return Math.floor(0+(MAX_SIM_TIME-0)*randomTime.nextDouble());
+        return Math.floor(0+(MAX_SIM_TIME/5-0)*randomTime.nextDouble());
     }
 
 
@@ -126,11 +130,13 @@ public class Simulator {
             numEvent--;
         }
 
-//        int k = 0;
-//        while (k<1){
-            Event e = new Event(getRandomStartTime(),EventType.RUN_DIJKSTRA);
+        double k = 1;
+        int numDisj = 32;
+        while (k<numDisj){
+            Event e = new Event( k*MAX_SIM_TIME/numDisj  ,EventType.RUN_DIJKSTRA);
             Simulator.eventQueue.add(e);
-//        }
+            k++;
+        }
 
     }
 
@@ -141,5 +147,40 @@ public class Simulator {
         e.setNodeID(nodeID);
         e.setEventType(EventType.INITIALIZE_INTEREST);
         Simulator.eventQueue.add(e);
+    }
+
+    public void resetVariables() {
+        for (Link l : networkLinks.values()) {
+            l.resetLinkLoad();
+        }
+    }
+
+    public void printLinkLoads(String fileName) throws FileNotFoundException {
+
+        for ( Link l : networkLinks.values() ) {
+            ArrayList<Double> test_link = l.getLinkLoad();
+            System.out.println(l.toString() + " " + + test_link.size() + " " + Arrays.toString(test_link.toArray()));
+
+        }
+
+        PrintWriter pw = new PrintWriter(new File(outputFile)); ///We may add the name of the file
+        StringBuilder sb = new StringBuilder();
+        sb.append("id");
+        sb.append(',');
+        sb.append("Name");
+        sb.append('\n');
+
+        sb.append("1");
+        sb.append(',');
+        sb.append("Prashant Ghimire");
+        sb.append('\n');
+
+        pw.write(sb.toString());
+        pw.close();
+        System.out.println("done!");
+
+
+
+
     }
 }

@@ -19,6 +19,13 @@ public class Link {
         return linkLoad;
     }
 
+    public void resetLinkLoad() {
+        linkLoad = new ArrayList<>();
+        load = 0;
+        deltaLoad = 0;
+        deltaTime = 1;
+    }
+
     public Link(int ID, int capacity) {
         this.ID = ID;
         this.capacity = capacity;
@@ -69,11 +76,18 @@ public class Link {
     public void updateLoad() {
         load = deltaLoad/deltaTime;
         linkLoad.add(load);
+//        System.out.println("Node1: " + firstNode.getID() + " Node2: " + secondNode.getID() +
+//                            " DeltaLoad: " + deltaLoad + " DeltaTime: " + deltaTime +
+//                            "   Capacity: " + capacity + "   Load: " + load + "   Cost: " + cost );
+
     }
 
     public void augmentLoad(double packetSize) {
         deltaLoad += packetSize;
-        deltaTime += packetSize/capacity;
+        deltaTime += 1000*packetSize/capacity;
+//        System.out.println("Node1: " + firstNode.getID() + " Node2: " + secondNode.getID() +
+//                            " DeltaLoad: " + deltaLoad + " DeltaTime: " + deltaTime +
+//                            "   Capacity: " + capacity + "   Load: " + load + "   Cost: " + cost );
     }
 
     @Override
@@ -83,4 +97,11 @@ public class Link {
         return this.firstNode.equals(linko.getFirstNode()) &&
                 this.secondNode.equals(linko.getSecondNode());
     }
+
+    @Override
+    public String toString() {
+        return "Link from: "+ firstNode.getID() + " to: " + secondNode.getID();
+    }
+
+
 }
