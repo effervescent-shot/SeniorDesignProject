@@ -1,5 +1,7 @@
 package Network;
 
+import java.util.ArrayList;
+
 public class Link {
     private int ID;
     private Node firstNode;
@@ -10,6 +12,19 @@ public class Link {
 
     private double deltaLoad = 0;
     private double deltaTime = 1;
+
+    private ArrayList<Double> linkLoad = new ArrayList<>();
+
+    public ArrayList<Double> getLinkLoad() {
+        return linkLoad;
+    }
+
+    public void resetLinkLoad() {
+        linkLoad = new ArrayList<>();
+        load = 0;
+        deltaLoad = 0;
+        deltaTime = 1;
+    }
 
     public Link(int ID, int capacity) {
         this.ID = ID;
@@ -22,7 +37,7 @@ public class Link {
         this.ID = ID;
         this.firstNode = firstNode;
         this.secondNode = secondNode;
-        this.capacity = capacity;
+        this.capacity = capacity;  /// Mbps
         this.load = 0;
         this.cost = 1/(capacity-load);
     }
@@ -56,17 +71,37 @@ public class Link {
         return this.secondNode;
     }
 
-    public void resetLoad() {
-        deltaLoad = 0;
-        deltaTime = 1;
-    }
+    public void resetLoad() { deltaLoad = 0; deltaTime = 1; }
 
     public void updateLoad() {
         load = deltaLoad/deltaTime;
+        linkLoad.add(load);
+//        System.out.println("Node1: " + firstNode.getID() + " Node2: " + secondNode.getID() +
+//                            " DeltaLoad: " + deltaLoad + " DeltaTime: " + deltaTime +
+//                            "   Capacity: " + capacity + "   Load: " + load + "   Cost: " + cost );
+
     }
 
-    public void augmentLoad(double packetSize, double time) {
-        deltaLoad += packetSize;
-        deltaTime += time;
+    public void augmentLoad(double packetSize) {  ///bit per second
+        deltaLoad += 1000*packetSize;
+        deltaTime += 1000*packetSize/capacity;
+//        System.out.println("Node1: " + firstNode.getID() + " Node2: " + secondNode.getID() +
+//                            " DeltaLoad: " + deltaLoad + " DeltaTime: " + deltaTime +
+//                            "   Capacity: " + capacity + "   Load: " + load + "   Cost: " + cost );
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Link)) return false;
+        Link linko = (Link) o;
+        return this.firstNode.equals(linko.getFirstNode()) &&
+                this.secondNode.equals(linko.getSecondNode());
+    }
+
+    @Override
+    public String toString() {
+        return "Link__"+ firstNode.getID() + "_" + secondNode.getID();
+    }
+
+
 }

@@ -2,6 +2,7 @@ package Helper;
 
 import ICN.Prefix;
 import ICN.RIB;
+import Network.Node;
 import Simulator.Simulator;
 
 import java.io.File;
@@ -44,9 +45,10 @@ public class ServeReader {
                 simulator.networkNodes.get(nodeID).setServedPrefixes(tmp);
 
             }
-            /*for (int i = 0; i <simulator. ; i++) {
 
-            }*/
+            for (Node node: simulator.networkNodes.values()){
+                    node.setRib(rib);
+            }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

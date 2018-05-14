@@ -4,16 +4,15 @@ import Enums.EventType;
 import Network.Packet;
 
 public class Event implements Comparable {
-    private long time;//In millisecond
+    private double time;//In milisecond
     private EventType eventType;
-    private Packet packet;
 
 
     public Event(){
 
     }
 
-    public Event(long time,EventType eventType){
+    public Event(double time,EventType eventType){
         this.time=time;
         this.eventType=eventType;
     }
@@ -25,11 +24,11 @@ public class Event implements Comparable {
         else   return -1;
     }
 
-    public long getTime() {
+    public double getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(double time) {
         this.time = time;
     }
 
@@ -37,32 +36,17 @@ public class Event implements Comparable {
         return eventType;
     }
 
-    public void setPacketType(EventType packetType) {
-        this.eventType = packetType;
-    }
-
     public void setEventType(EventType eventType) {
         this.eventType = eventType;
     }
 
-    public Packet getPacket() {
-        return packet;
-    }
-
-    public void setPacket(Packet packet) {
-        this.packet = packet;
-    }
-
-    public boolean hasPacket(){
-        if(this.eventType==EventType.RUN_DIJKSTRA){
-            return false;
-        }
-        return true;
-    }
     @Override
     public String toString() {
-        return "Event type: "+this.eventType+ " at time "+ this.time + " and the packet is " + this.packet.getPacketType() + "\n"
-                +this.packet.getSourceNodeID()+"-"+this.packet.getDestinationNodeID()+"\n"
-                +this.packet.getSimPath().toString() +"\n";
+        return "Event type: "+this.eventType+ " at time "+ this.time + "\n";
     }
+
+    public void runEvent() {
+
+    }
+
 }

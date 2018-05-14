@@ -3,14 +3,34 @@ package Network;
 import Enums.PacketType;
 import Helper.SimPath;
 import ICN.Data;
+import ICN.Prefix;
+import Simulator.Simulator;
 
 public class Packet {
-    private long ID;
+    private static final int InterestPacketSize = 1; //MB
+    private static final int DataPacketSize = 8; //MB
+
+    private static long ID = 10000;
     private int sourceNodeID;
     private int destinationNodeID;
-    private Data data;
+    private Prefix prefix;
     private SimPath simPath;
     private PacketType packetType;
+
+    private double CreationTime;
+    private double TerminationTime;
+
+    public Packet (double creationTime) {
+       this.ID++;
+       this.CreationTime = creationTime;
+    }
+
+    public Packet (double creationTime, PacketType packetType, SimPath path) {
+        this.ID++;
+        this.simPath = path;
+        this.packetType = packetType;
+        this.CreationTime = creationTime;
+    }
 
     public long getID() {
         return ID;
@@ -36,13 +56,9 @@ public class Packet {
         this.destinationNodeID = destinationNodeID;
     }
 
-    public Data getData() {
-        return data;
-    }
+    public Prefix getPrefix() { return prefix; }
 
-    public void setData(Data data) {
-        this.data = data;
-    }
+    public void setPrefix(Prefix prefix) { this.prefix = prefix; }
 
     public SimPath getSimPath() {
         return simPath;
@@ -58,5 +74,20 @@ public class Packet {
 
     public void setPacketType(PacketType packetType) {
         this.packetType = packetType;
+    }
+
+    private static int getInterestPacketSize() { return InterestPacketSize; }
+
+    private static int getDataPacketSize() { return DataPacketSize; }
+
+    public int getPacketSize() {
+        if(this.packetType == PacketType.INTEREST_PACKET)
+            return getInterestPacketSize();
+
+        return getDataPacketSize();
+    }
+    public void terminatePacket(double terminationTime) {
+        this.TerminationTime = terminationTime;
+        Simulator.allPackets.add(this);
     }
 }

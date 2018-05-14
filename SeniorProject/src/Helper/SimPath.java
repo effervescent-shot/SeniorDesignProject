@@ -2,11 +2,10 @@ package Helper;
 
 import Simulator.Simulator;
 
-import javax.lang.model.type.ArrayType;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SimPath {
+public class SimPath implements Comparable{
     private double cost;
     private ArrayList<Integer> path; // = new ArrayList<Integer>();
 
@@ -18,6 +17,14 @@ public class SimPath {
     public SimPath(ArrayList<Integer> path, double cost){
         this.path=path;
         this.cost = cost;
+    }
+
+    /*
+    Copy consturctor
+     */
+    public SimPath (SimPath simPath){
+        this.cost = simPath.getCost();
+        this.path = new ArrayList<>(simPath.getPath());
     }
 
     public void setReverse(){
@@ -61,7 +68,7 @@ public class SimPath {
             firstID = path.get(i);
             secondID = path.get(i+1);
             p = new Pair<>(firstID,secondID);
-            sum+= Simulator.newtworkLinks.get(p).getCost();
+            sum+= Simulator.networkLinks.get(p).getCost();
         }
 
         return cost;
@@ -71,10 +78,19 @@ public class SimPath {
         this.path.add(nodeID);
     }
 
+    public int getLast() {
+        return this.path.get(path.size()-1);
+    }
+
     @Override
     public String toString() {
-        String s="SimPath{" +
-                "cost=" + cost + "  " + Arrays.toString(path.toArray()) + "\n";
-        return s;
+        return "SimPath {" +  "cost=" + cost + "  array : " + Arrays.toString(path.toArray()) + "}";
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(this.cost == ((SimPath)o).getCost()) return 0;
+        else if(this.cost > ((SimPath)o).getCost()) return 1;
+        else   return -1;
     }
 }

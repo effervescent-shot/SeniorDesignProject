@@ -25,12 +25,13 @@ public class PrefixReader {
             int n = reader.nextInt();
 
             String prefixName;
-
+            int prefixSize;
             Prefix prefix;
 
             for (int i = 0; i<n; i++) {
                 prefixName = reader.next();
-                prefix = new Prefix(prefixName);
+                prefixSize = reader.nextInt();
+                prefix = new Prefix(prefixName, prefixSize);
                 simulator.networkPrefixes.put(prefixName,prefix);
 
             }

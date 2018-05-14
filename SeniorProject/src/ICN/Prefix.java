@@ -2,12 +2,11 @@ package ICN;
 
 public class Prefix {
     String prefixName;
+    Data data;
 
-    public Prefix(){
-
-    }
-    public Prefix(String prefixName){
+    public Prefix(String prefixName, int size){
         this.prefixName=prefixName;
+        data = new Data(size);
     }
 
     public String getPrefixName() {
@@ -17,4 +16,8 @@ public class Prefix {
     public void setPrefixName(String prefixName) {
         this.prefixName = prefixName;
     }
+
+    public Data getData() { return data; }
+
+    public void setData(Data data) { this.data = data; }
 }
