@@ -20,7 +20,7 @@ public class Main {
         sim.buildPaths(graph3,3);
         sim.initialization(5000,116185, 17,19);
         sim.runSimulation(graph3, 3);
-        sim.printLinkLoads("vis-data/load3.csv");
+        sim.printLinkLoads("vis-data/load3.csv", "vis-data/packet3.csv");
 
 
         sim.resetVariables();
@@ -29,6 +29,6 @@ public class Main {
         sim.buildPaths(graph1,1);
         sim.initialization(5000,116185, 17,19);
         sim.runSimulation(graph1, 1);
-        sim.printLinkLoads("vis-data/load1.csv");
+        sim.printLinkLoads("vis-data/load1.csv", "vis-data/packet1.csv");
     }
 }

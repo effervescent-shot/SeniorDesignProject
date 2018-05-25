@@ -7,9 +7,8 @@ import matplotlib.pylab as plt
 from numpy import genfromtxt
 import csv
 import getopt
-
-
-
+from scipy import stats  
+import seaborn as sns
 
 
 
@@ -23,6 +22,10 @@ def main():
 	path3load = pd.read_csv('load3.csv', sep=',', header=0)
 	path1load = pd.read_csv('load1.csv', sep=',', header=0)
 
+	
+	path1delay = np.genfromtxt('packet1.csv', delimiter=',')
+	path3delay = np.genfromtxt('packet3.csv', delimiter=',')
+	
 	time = sys.argv[1]
 	time = int(time)
 	print time
@@ -36,47 +39,51 @@ def main():
 	path3_std_l = path3T.std(axis=1)
 
 
-
 	links1 = path1load['Links:']
 	path1T = path1load.iloc[:, range(1,time+1)]
 	path1_mean_t = path1T.mean(axis=0)
 	path1_std_t = path1T.std(axis=0)
 
 
+	sns.set()
+	sns.set(color_codes=True)
 
-	plt.figure(1, figsize=(15,8))                # the first figure
+	plt.figure(1, figsize=(10,8))                # the first figure
 	
 	plt.subplot(211)             # the first subplot in the first figure
-	plt.plot(range(1,time+1), path3_mean_t, 'r+', label='path3_load_mean')
+	plt.plot(range(1,time+1), path3_mean_t, 'ro', label='path3_load_mean')
 	plt.plot(range(1,time+1), path1_mean_t, 'bo', label='path1_load_mean' )
-	plt.xlabel('Time' , fontsize = 14)
-	plt.ylabel('Mean Load - bps', fontsize = 14)
+	plt.xlabel('Time(sec)' , fontsize = 12)
+	plt.ylabel('Mean Load(bps)', fontsize = 12)
 	plt.ylim(ymax = max(path3_mean_t)+50, ymin = 0)
 	plt.legend(loc=1)
-	#plt.show()
 
-	#plt.figure(2)
 	plt.subplot(212)             # the second subplot in the first figure
-	plt.plot(range(1,time+1), path3_std_t, 'r+', label= 'path3_load_std')
+	plt.plot(range(1,time+1), path3_std_t, 'ro', label= 'path3_load_std')
 	plt.plot(range(1,time+1), path1_std_t, 'bo', label= 'path1_load_std')
-	plt.xlabel('Time', fontsize = 14)
-	plt.ylabel('Std Load', fontsize = 14)
+	plt.xlabel('Time(sec)', fontsize = 12)
+	plt.ylabel('Std Load', fontsize = 12)
 	plt.ylim(ymax = max(path3_std_t)+50, ymin = 0)
-	plt.legend(loc=4)
-
-
-	#plt.subplot(313)             # the second subplot in the first figure
-	#plt.plot( range(1, links3.size+1), path3_mean_l, 'r+', label= 'link_load_mean')
-	#plt.plot( range(1, links3.size+1), path3_std_t, 'bo', label= 'link_load_std')
-	#plt.xlabel('Links', fontsize = 14)
-	#plt.ylabel('Load', fontsize = 14)
-	#plt.legend(loc=4)
-
-
-	plt.show()	
+	plt.legend(loc=1)
+	#plt.show()	
 
 
 
+	
+	plt.figure(2, figsize=(10,10)) 
+	plt.subplot(211)
+	plt.xlabel('Delivery Time(msec)', fontsize = 12)
+	plt.ylabel('Relative Frequency', fontsize = 12)
+	sns.distplot(path3delay, kde=True, hist=True, bins=20, fit=stats.invgauss);
+	plt.title('Path3 Packet Delivery Time', fontsize = 12 )
+	
 
+	plt.subplot(212)
+	plt.xlabel('Delivery Time(msec)', fontsize = 12)
+	plt.ylabel('Relative Frequency', fontsize = 12)
+	sns.distplot(path1delay, kde=True, hist=True, bins=20, fit=stats.invgauss);
+	plt.title('Path1 Packet Delivery Time', fontsize = 12 )
+
+	plt.show()
 
 main()

@@ -89,9 +89,18 @@ public class Packet {
 
         return getDataPacketSize();
     }
+
     public void terminatePacket(double terminationTime) {
         this.TerminationTime = terminationTime;
         Simulator.allPackets.add(this);
+    }
+
+    public double getCreationTime() {
+        return CreationTime;
+    }
+
+    public double getTerminationTime() {
+        return TerminationTime;
     }
 
     @Override
