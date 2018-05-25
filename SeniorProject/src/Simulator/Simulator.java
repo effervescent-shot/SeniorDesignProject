@@ -7,6 +7,7 @@ import kPath.Graph;
 import kPath.Path;
 
 import kPath.shortestpaths.YenTopKShortestPathsAlg;
+import org.omg.CORBA.INITIALIZE;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,6 +15,7 @@ import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import static Enums.EventType.INITIALIZE_INTEREST;
 import static Enums.EventType.RUN_DIJKSTRA;
 import static Enums.EventType.UPDATE_LOAD;
 
@@ -59,9 +61,13 @@ public class Simulator {
                 //System.out.println("\n\n\n\n\n\n\n");
             } else {
                 e.runEvent();
+                //System.out.println(e.toString());
             }
         }
-
+        /*for ( Packet p: allPackets) {
+            System.out.println(p);
+        }*/
+        System.out.println(allPackets.size());
     }
 
     public static void buildPaths(Graph graph, int pathDegree) {

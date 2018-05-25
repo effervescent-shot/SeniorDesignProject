@@ -13,10 +13,6 @@ import getopt
 
 
 
-#print("Shell we begin?")
-
-#path3load = np.genfromtxt('path3_1.csv', delimiter=",")
-
 
 def main():
 	print "Shell we begin?"
@@ -24,8 +20,8 @@ def main():
 	#print  path3load['Std']
 	#print 'PATH1:\n',path1load['Mean']
 	#print  path1load['Std']
-	path3load = pd.read_csv('path3_1.csv', sep=',', header=0)
-	path1load = pd.read_csv('path1_1.csv', sep=',', header=0)
+	path3load = pd.read_csv('load3.csv', sep=',', header=0)
+	path1load = pd.read_csv('load1.csv', sep=',', header=0)
 
 	time = sys.argv[1]
 	time = int(time)
@@ -55,7 +51,7 @@ def main():
 	plt.plot(range(1,time+1), path1_mean_t, 'bo', label='path1_load_mean' )
 	plt.xlabel('Time' , fontsize = 14)
 	plt.ylabel('Mean Load - bps', fontsize = 14)
-	plt.ylim(ymax = 500, ymin = 0)
+	plt.ylim(ymax = max(path3_mean_t)+50, ymin = 0)
 	plt.legend(loc=1)
 	#plt.show()
 
@@ -65,7 +61,7 @@ def main():
 	plt.plot(range(1,time+1), path1_std_t, 'bo', label= 'path1_load_std')
 	plt.xlabel('Time', fontsize = 14)
 	plt.ylabel('Std Load', fontsize = 14)
-	plt.ylim(ymax = 500, ymin = 0)
+	plt.ylim(ymax = max(path3_std_t)+50, ymin = 0)
 	plt.legend(loc=4)
 
 

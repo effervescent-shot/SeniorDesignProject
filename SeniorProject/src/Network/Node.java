@@ -159,6 +159,7 @@ public class Node {
             /////    if data received
                 else if(e.getEventType() == EventType.RECEIVE_DATA) {
                         ///DO NOTHING -- Log all
+                    e.getPacket().terminatePacket(e.getTime());
                 }
         } else {
             ///   if this is not the destination //////
@@ -266,7 +267,7 @@ public class Node {
     }
 
     private double calculateDelay (Link link, Event e) {
-        return 1000 * ((Send_Receive_Event)e).getPacket().getPacketSize() / link.getCapacity();
+        return 1000 * ((Send_Receive_Event)e).getPacket().getPacketSize()*8 / link.getCapacity();
     }
 
     public void Initialize_Data(double time, Prefix prefix, int destNodeID, SimPath path) {
