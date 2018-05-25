@@ -13,14 +13,14 @@ public class Link {
     private double deltaLoad = 0;
     private double deltaTime = 1;
 
-    private ArrayList<Double> linkLoad = new ArrayList<>();
+    private ArrayList<Double> linkLoadPerSecond = new ArrayList<>();
 
-    public ArrayList<Double> getLinkLoad() {
-        return linkLoad;
+    public ArrayList<Double> getLinkLoadPerSecond() {
+        return linkLoadPerSecond;
     }
 
-    public void resetLinkLoad() {
-        linkLoad = new ArrayList<>();
+    public void resetLink() {
+        linkLoadPerSecond = new ArrayList<>();
         load = 0;
         deltaLoad = 0;
         deltaTime = 1;
@@ -71,20 +71,32 @@ public class Link {
         return this.secondNode;
     }
 
-    public void resetLoad() { deltaLoad = 0; deltaTime = 1; }
+    public void resetLoad() {
+        if(linkLoadPerSecond.isEmpty()) {
+            load = 0;
+        } else {
+            double sumLoad = 0;
+            for(int i=1; i<5; i++){
+                sumLoad += linkLoadPerSecond.get(linkLoadPerSecond.size()-i);
+            }
+            load = sumLoad/5;
+        }
+    }
 
     public void updateLoad() {
-        load = deltaLoad/deltaTime;
-        linkLoad.add(load);
+        //load = deltaLoad/deltaTime;
+        linkLoadPerSecond.add(deltaLoad);
+        deltaLoad = 0;
+        //System.out.println("Here::::" + linkLoadPerSecond.size());
 //        System.out.println("Node1: " + firstNode.getID() + " Node2: " + secondNode.getID() +
 //                            " DeltaLoad: " + deltaLoad + " DeltaTime: " + deltaTime +
 //                            "   Capacity: " + capacity + "   Load: " + load + "   Cost: " + cost );
 
     }
 
-    public void augmentLoad(double packetSize) {  ///bit per second
-        deltaLoad += 1000*packetSize;
-        deltaTime += 1000*packetSize/capacity;
+    public void augmentLoad(double packetSize) {  // packet size (MB)
+        deltaLoad += 8*packetSize;
+        deltaTime += 8*packetSize/capacity;
 //        System.out.println("Node1: " + firstNode.getID() + " Node2: " + secondNode.getID() +
 //                            " DeltaLoad: " + deltaLoad + " DeltaTime: " + deltaTime +
 //                            "   Capacity: " + capacity + "   Load: " + load + "   Cost: " + cost );

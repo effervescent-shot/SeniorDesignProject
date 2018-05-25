@@ -3,7 +3,6 @@ import Enums.EventType;
 import ICN.Prefix;
 import Network.*;
 import Helper.*;
-import com.sun.org.apache.xml.internal.utils.SystemIDResolver;
 import kPath.Graph;
 import kPath.Path;
 
@@ -14,9 +13,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 import static Enums.EventType.RUN_DIJKSTRA;
+import static Enums.EventType.UPDATE_LOAD;
 
 public class Simulator {
     public static Map<Integer, Node> networkNodes = new HashMap();
@@ -32,10 +31,11 @@ public class Simulator {
     private static Random randomNode;
     private static Random randomPrefix;
 
-    private static int numDisj = 200;
+    private static int numDisj;
 
     public Simulator(double max_sim_time){
         this.MAX_SIM_TIME = max_sim_time;
+        this.numDisj = (int)MAX_SIM_TIME/5000;
         SimTime = 0;
     }
 
@@ -47,10 +47,16 @@ public class Simulator {
         //
         while(!eventQueue.isEmpty() && SimTime < MAX_SIM_TIME) {
             Event e = (Event)eventQueue.poll();
-
+            SimTime = e.getTime();
+            //System.out.println(e.getEventType()+ " time: " + e.getTime());
             if(e.getEventType() == RUN_DIJKSTRA) {
                 //updateEdgeCosts(graph);
                 buildPaths(graph, pathDegree);
+            } else if(e.getEventType() == UPDATE_LOAD) {
+                for (Link l: networkLinks.values()) {
+                    l.updateLoad();
+                }
+                //System.out.println("\n\n\n\n\n\n\n");
             } else {
                 e.runEvent();
             }
@@ -93,8 +99,8 @@ public class Simulator {
 
     public static void updateEdgeCosts(Graph graph) {
         for (Link l: networkLinks.values() ) {
-            l.updateLoad();
-            l.resetLoad();
+            //l.updateLoad();  //Call in each second
+            l.resetLoad();   //calculate avg load of last 5 second
             //System.out.println(l.getCost());
             graph.vertexPairWeightIndex.put(
                     new Pair<Integer, Integer>(l.getFirstNode().getID(),l.getSecondNode().getID()),l.getCost());
@@ -131,12 +137,18 @@ public class Simulator {
             numEvent--;
         }
 
-        double k = 1;
-
+        int k = 1;
         while (k<numDisj){
-            Event e = new Event( k*MAX_SIM_TIME/numDisj  ,EventType.RUN_DIJKSTRA);
+            Event e = new Event( k*5000 ,EventType.RUN_DIJKSTRA);
             Simulator.eventQueue.add(e);
             k++;
+        }
+
+        int l = 1;
+        while (l <= MAX_SIM_TIME/1000) { //How many seconds
+            Event e = new Event( l*1000, EventType.UPDATE_LOAD);
+            Simulator.eventQueue.add(e);
+            l++;
         }
 
     }
@@ -152,8 +164,11 @@ public class Simulator {
 
     public void resetVariables() {
         for (Link l : networkLinks.values()) {
-            l.resetLinkLoad();
+            l.resetLink();
         }
+        eventQueue.clear();
+        allPackets.clear();
+        SimTime = 0;
     }
 
     public void printLinkLoads(String fileName) throws FileNotFoundException {
@@ -162,7 +177,7 @@ public class Simulator {
         StringBuilder sb;  //= new StringBuilder();
         sb = new StringBuilder();
         sb.append("Links:");
-        for(int i = 0; i<numDisj; i++) {
+        for(int i = 0; i<MAX_SIM_TIME/1000; i++) {
             sb.append(',');
             sb.append('T');
             sb.append(i);
@@ -172,7 +187,7 @@ public class Simulator {
         DecimalFormat df = new DecimalFormat("####.###");
 
         for ( Link l : networkLinks.values() ) {
-            ArrayList<Double> test_link = l.getLinkLoad();
+            ArrayList<Double> test_link = l.getLinkLoadPerSecond();
             sb = new StringBuilder();
             sb.append(l.toString());
             for ( double loadVal : test_link ) {
