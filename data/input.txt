@@ -1,6 +1,6 @@
 12
-node0 node1 256
-node0 node6 256
+node0 node1 512
+node0 node6 512
 node0 node5 512
 node5 node4 1024
 node6 node1 2048

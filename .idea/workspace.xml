@@ -12,28 +12,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SeniorProject/src/Simulator/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="29" column="28" lean-forward="false" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+            <state relative-caret-position="612">
+              <caret line="39" column="5" lean-forward="true" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Simulator.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RandomTopology.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SeniorProject/src/Input/RandomTopology.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="57" column="48" lean-forward="false" selection-start-line="57" selection-start-column="48" selection-end-line="57" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Simulator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SeniorProject/src/Simulator/Simulator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="220" column="9" lean-forward="true" selection-start-line="220" selection-start-column="9" selection-end-line="220" selection-end-column="9" />
+            <state relative-caret-position="824">
+              <caret line="180" column="16" lean-forward="false" selection-start-line="180" selection-start-column="16" selection-end-line="180" selection-end-column="16" />
               <folding>
-                <element signature="e#4382#4383#0" expanded="true" />
-                <element signature="e#4471#4472#0" expanded="true" />
-                <element signature="e#4507#4508#0" expanded="true" />
-                <element signature="e#4603#4604#0" expanded="true" />
-                <element signature="e#4644#4645#0" expanded="true" />
-                <element signature="e#4721#4722#0" expanded="true" />
+                <element signature="e#4432#4433#0" expanded="true" />
+                <element signature="e#4521#4522#0" expanded="true" />
+                <element signature="e#4557#4558#0" expanded="true" />
+                <element signature="e#4653#4654#0" expanded="true" />
+                <element signature="e#4694#4695#0" expanded="true" />
+                <element signature="e#4771#4772#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -82,6 +92,7 @@
     <findStrings>
       <find>Sys</find>
       <find>addTo</find>
+      <find>static</find>
     </findStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -100,7 +111,6 @@
         <option value="$PROJECT_DIR$/SeniorProject/data/serve_input.txt" />
         <option value="$PROJECT_DIR$/SeniorProject/src/ICN/RIB.java" />
         <option value="$PROJECT_DIR$/SeniorProject/src/ICN/FIB.java" />
-        <option value="$PROJECT_DIR$/SeniorProject/src/Helper/TopologyReader.java" />
         <option value="$PROJECT_DIR$/SeniorProject/src/Helper/SimPath.java" />
         <option value="$PROJECT_DIR$/SeniorProject/src/Simulator/Init_Interest_Data_Event.java" />
         <option value="$PROJECT_DIR$/SeniorProject/src/Simulator/Event.java" />
@@ -111,8 +121,11 @@
         <option value="$PROJECT_DIR$/SeniorProject/src/Network/Link.java" />
         <option value="$PROJECT_DIR$/SeniorProject/src/Network/Node.java" />
         <option value="$PROJECT_DIR$/SeniorProject/src/Network/Packet.java" />
-        <option value="$PROJECT_DIR$/SeniorProject/src/Simulator/Main.java" />
         <option value="$PROJECT_DIR$/SeniorProject/src/Simulator/Simulator.java" />
+        <option value="$PROJECT_DIR$/SeniorProject/src/Simulator/Simulator2.java" />
+        <option value="$PROJECT_DIR$/SeniorProject/src/Helper/TopologyReader.java" />
+        <option value="$PROJECT_DIR$/SeniorProject/src/Input/RandomTopology.java" />
+        <option value="$PROJECT_DIR$/SeniorProject/src/Simulator/Main.java" />
       </list>
     </option>
   </component>
@@ -122,7 +135,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="53" />
     <option name="y" value="233" />
     <option name="width" value="1417" />
@@ -151,28 +164,22 @@
         <subPane>
           <expand>
             <path>
-              <item name="cmpe492_BackToFuture" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cmpe492_BackToTheFuture" type="b2602c69:ProjectViewProjectNode" />
               <item name="SeniorProject" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="cmpe492_BackToFuture" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SeniorProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cmpe492_BackToFuture" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cmpe492_BackToTheFuture" type="b2602c69:ProjectViewProjectNode" />
               <item name="SeniorProject" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Enums" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="cmpe492_BackToFuture" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cmpe492_BackToTheFuture" type="b2602c69:ProjectViewProjectNode" />
               <item name="SeniorProject" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Network" type="462c0819:PsiDirectoryNode" />
+              <item name="Input" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="cmpe492_BackToFuture" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cmpe492_BackToTheFuture" type="b2602c69:ProjectViewProjectNode" />
               <item name="SeniorProject" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Simulator" type="462c0819:PsiDirectoryNode" />
@@ -329,15 +336,15 @@
       <workItem from="1525095878339" duration="12529000" />
       <workItem from="1526117323667" duration="30130000" />
       <workItem from="1527246285922" duration="11584000" />
-      <workItem from="1527267240150" duration="8739000" />
+      <workItem from="1527267240150" duration="18081000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="106789000" />
+    <option name="totallyTimeSpent" value="116131000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="53" y="233" width="1417" height="1009" extended-state="0" />
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -347,13 +354,14 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3798186" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35318705" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14442013" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2896628" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3291536" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -365,7 +373,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3291536" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -408,36 +415,22 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/SeniorProject/src/Simulator/Simulator.java</url>
+          <line>64</line>
+          <properties />
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="40" />
+      <option name="time" value="43" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/SeniorProject/src/Network/Packet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="10" column="50" lean-forward="false" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="50" />
-          <folding>
-            <element signature="method#getPacketSize#0;class#Packet#0" expanded="false" />
-            <element signature="method#terminatePacket#0;class#Packet#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SeniorProject/src/Helper/SimPath.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1242">
-          <caret line="86" column="58" lean-forward="false" selection-start-line="86" selection-start-column="58" selection-end-line="86" selection-end-column="58" />
-          <folding>
-            <element signature="e#1805#1806#0" expanded="false" />
-            <element signature="e#1856#1857#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SeniorProject/src/Simulator/Send_Receive_Event.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="972">
@@ -470,12 +463,12 @@
         <state relative-caret-position="2052">
           <caret line="114" column="23" lean-forward="true" selection-start-line="114" selection-start-column="23" selection-end-line="114" selection-end-column="23" />
           <folding>
-            <element signature="e#4382#4383#0" expanded="true" />
-            <element signature="e#4471#4472#0" expanded="true" />
-            <element signature="e#4507#4508#0" expanded="true" />
-            <element signature="e#4603#4604#0" expanded="true" />
-            <element signature="e#4644#4645#0" expanded="true" />
-            <element signature="e#4721#4722#0" expanded="true" />
+            <element signature="e#4432#4433#0" expanded="true" />
+            <element signature="e#4521#4522#0" expanded="true" />
+            <element signature="e#4557#4558#0" expanded="true" />
+            <element signature="e#4653#4654#0" expanded="true" />
+            <element signature="e#4694#4695#0" expanded="true" />
+            <element signature="e#4771#4772#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -564,12 +557,12 @@
         <state relative-caret-position="1890">
           <caret line="105" column="73" lean-forward="false" selection-start-line="105" selection-start-column="73" selection-end-line="105" selection-end-column="73" />
           <folding>
-            <element signature="e#4382#4383#0" expanded="true" />
-            <element signature="e#4471#4472#0" expanded="true" />
-            <element signature="e#4507#4508#0" expanded="true" />
-            <element signature="e#4603#4604#0" expanded="true" />
-            <element signature="e#4644#4645#0" expanded="true" />
-            <element signature="e#4721#4722#0" expanded="true" />
+            <element signature="e#4432#4433#0" expanded="true" />
+            <element signature="e#4521#4522#0" expanded="true" />
+            <element signature="e#4557#4558#0" expanded="true" />
+            <element signature="e#4653#4654#0" expanded="true" />
+            <element signature="e#4694#4695#0" expanded="true" />
+            <element signature="e#4771#4772#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -737,14 +730,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SeniorProject/src/Helper/TopologyReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1062">
-          <caret line="66" column="17" lean-forward="false" selection-start-line="66" selection-start-column="17" selection-end-line="66" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SeniorProject/data/prefix_input.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -895,26 +880,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SeniorProject/src/Simulator/Main.java">
+    <entry file="file://$PROJECT_DIR$/SeniorProject/src/Helper/TopologyReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="29" column="28" lean-forward="false" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+        <state relative-caret-position="216">
+          <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SeniorProject/src/Simulator/Simulator2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="32" column="37" lean-forward="true" selection-start-line="32" selection-start-column="37" selection-end-line="32" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SeniorProject/src/Simulator/Simulator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="220" column="9" lean-forward="true" selection-start-line="220" selection-start-column="9" selection-end-line="220" selection-end-column="9" />
+        <state relative-caret-position="824">
+          <caret line="180" column="16" lean-forward="false" selection-start-line="180" selection-start-column="16" selection-end-line="180" selection-end-column="16" />
           <folding>
-            <element signature="e#4382#4383#0" expanded="true" />
-            <element signature="e#4471#4472#0" expanded="true" />
-            <element signature="e#4507#4508#0" expanded="true" />
-            <element signature="e#4603#4604#0" expanded="true" />
-            <element signature="e#4644#4645#0" expanded="true" />
-            <element signature="e#4721#4722#0" expanded="true" />
+            <element signature="e#4432#4433#0" expanded="true" />
+            <element signature="e#4521#4522#0" expanded="true" />
+            <element signature="e#4557#4558#0" expanded="true" />
+            <element signature="e#4653#4654#0" expanded="true" />
+            <element signature="e#4694#4695#0" expanded="true" />
+            <element signature="e#4771#4772#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SeniorProject/src/Input/RandomTopology.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="57" column="48" lean-forward="false" selection-start-line="57" selection-start-column="48" selection-end-line="57" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SeniorProject/src/Simulator/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="39" column="5" lean-forward="true" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
