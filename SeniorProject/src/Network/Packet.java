@@ -10,7 +10,8 @@ public class Packet {
     private static final int InterestPacketSize = 1; //MB
     private static final int DataPacketSize = 8; //MB
 
-    private static long ID = 10000;
+    private static long sID = 1;
+    private long ID;
     private int sourceNodeID;
     private int destinationNodeID;
     private Prefix prefix;
@@ -21,12 +22,14 @@ public class Packet {
     private double TerminationTime;
 
     public Packet (double creationTime) {
-       this.ID++;
+       this.ID = sID;
+       this.sID++;
        this.CreationTime = creationTime;
     }
 
     public Packet (double creationTime, PacketType packetType, SimPath path) {
-        this.ID++;
+        this.ID = sID;
+        this.sID++;
         this.simPath = path;
         this.packetType = packetType;
         this.CreationTime = creationTime;
@@ -86,8 +89,22 @@ public class Packet {
 
         return getDataPacketSize();
     }
+
     public void terminatePacket(double terminationTime) {
         this.TerminationTime = terminationTime;
         Simulator.allPackets.add(this);
+    }
+
+    public double getCreationTime() {
+        return CreationTime;
+    }
+
+    public double getTerminationTime() {
+        return TerminationTime;
+    }
+
+    @Override
+    public String toString() {
+        return ""+this.ID+" p_type:" + packetType+ "  __from: "+sourceNodeID+" to "+destinationNodeID+"   __created: " + CreationTime + " terminated: " + TerminationTime;
     }
 }

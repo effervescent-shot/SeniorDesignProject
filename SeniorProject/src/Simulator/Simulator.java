@@ -7,6 +7,7 @@ import kPath.Graph;
 import kPath.Path;
 
 import kPath.shortestpaths.YenTopKShortestPathsAlg;
+import org.omg.CORBA.INITIALIZE;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,6 +15,7 @@ import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import static Enums.EventType.INITIALIZE_INTEREST;
 import static Enums.EventType.RUN_DIJKSTRA;
 import static Enums.EventType.UPDATE_LOAD;
 
@@ -59,9 +61,13 @@ public class Simulator {
                 //System.out.println("\n\n\n\n\n\n\n");
             } else {
                 e.runEvent();
+                //System.out.println(e.toString());
             }
         }
-
+        /*for ( Packet p: allPackets) {
+            System.out.println(p);
+        }*/
+        System.out.println(allPackets.size());
     }
 
     public static void buildPaths(Graph graph, int pathDegree) {
@@ -171,9 +177,9 @@ public class Simulator {
         SimTime = 0;
     }
 
-    public void printLinkLoads(String fileName) throws FileNotFoundException {
+    public void printLinkLoads(String loadFile, String packetFile ) throws FileNotFoundException {
 
-        PrintWriter pw = new PrintWriter(new File(fileName)); ///We may add the name of the file
+        PrintWriter pw = new PrintWriter(new File(loadFile)); ///We may add the name of the file
         StringBuilder sb;  //= new StringBuilder();
         sb = new StringBuilder();
         sb.append("Links:");
@@ -184,7 +190,7 @@ public class Simulator {
         }
         sb.append('\n');
         pw.write(sb.toString());
-        DecimalFormat df = new DecimalFormat("####.###");
+        DecimalFormat df = new DecimalFormat("######.###");
 
         for ( Link l : networkLinks.values() ) {
             ArrayList<Double> test_link = l.getLinkLoadPerSecond();
@@ -199,10 +205,24 @@ public class Simulator {
             pw.write(sb.toString());
         }
         pw.close();
+
+
+        PrintWriter pw2 = new PrintWriter(new File(packetFile));
+        StringBuilder sb2;  //= new StringBuilder();
+        sb2 = new StringBuilder();
+        //sb2.append("Delay:");
+        //sb2.append('\n');
+        double d;
+        for (int i = 0; i<allPackets.size()-1; i++) {
+            d = (allPackets.get(i).getTerminationTime()- allPackets.get(i).getCreationTime());
+            sb2.append(d);
+            sb2.append(',');
+
+        }
+        sb2.append(allPackets.get(allPackets.size()-1).getTerminationTime() - allPackets.get(allPackets.size()-1).getCreationTime());
+        pw2.write(sb2.toString());
+        pw2.close();
+
         System.out.println("done!");
-
-
-
-
     }
 }
