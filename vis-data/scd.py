@@ -28,10 +28,17 @@ def read_load_files(filenames,time):
 		load_aug_total += p_total + np.zeros(len(p_total))
 		load_aug_std += p_std + np.zeros(len(p_std))
 
-	return load_aug_mean/n, load_aug_total/n, load_aug_std/5
+	return load_aug_mean/n, load_aug_total/n, load_aug_std/n
 
 def read_pakcet_files(filenames):
-	return 0
+	packet_aug_mean = []
+	#print(filenames)
+	for file in filenames:
+		p_load = pd.read_csv(file, sep=',', header=None)
+		p_mean = p_load.mean(axis=1)
+		packet_aug_mean.append(p_mean)
+		#print(p_mean)
+	return packet_aug_mean
 
 
 def main():
@@ -62,45 +69,54 @@ def main():
 
 	p1_aug_mean, p1_aug_total, p1_aug_std = read_load_files(P1_LOAD_FILES, time)
 	p3_aug_mean, p3_aug_total, p3_aug_std = read_load_files(P3_LOAD_FILES, time)
+	
+	#p1_packet_means = read_pakcet_files(P1_PACKET_FILES)
+	#p3_packet_means = read_pakcet_files(P3_PACKET_FILES)
+	p1_packet_means = pd.read_csv('packet1.csv', sep=',', header=None)
+	p3_packet_means = pd.read_csv('packet3.csv', sep=',', header=None)
+
 
 
 	plt.figure(1, figsize=(10,8))      # the first figure
 	plt.subplot(311) 
-	x1 = range(1,time+1+9)
-	#xnew = np.linspace(min(x), max(x), 1000)
-	#smoot3 = spline(x, conv3, xnew) 
-	conv3_10 = np.convolve(p3_aug_total, [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1])
-	conv1_10 = np.convolve(p1_aug_total, [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1])
-	plt.plot(x1, conv3_10, label='P3_total_load')
-	plt.plot(x1, conv1_10, label='P1_total_load')
+	x1 = range(101,time-69+1+19)
+	conv3_20 = np.convolve(p3_aug_total, np.full ((20),0.05))
+	conv1_20 = np.convolve(p1_aug_total, np.full ((20),0.05))
+	plt.plot(x1, conv3_20[100:950], label='P3_total_load')
+	plt.plot(x1, conv1_20[100:950], label='P1_total_load')
 	plt.xlabel('Time(sec)' , fontsize = 12)
 	plt.ylabel('Total Load(bps)', fontsize = 12)
-	plt.ylim(ymax = max(conv3_10)+30, ymin = 0)
-	plt.legend(loc=1)
+	plt.ylim(ymax = max(conv3_20)+100, ymin = 0)
+	plt.legend(loc=4)
 	
 
 	plt.subplot(312) 
-	x2 = range(1,time+1+4)
-	conv3_5 = np.convolve(p3_aug_mean, [0.2,0.2,0.2,0.2,0.2])
-	conv1_5 = np.convolve(p1_aug_mean,[0.2,0.2,0.2,0.2,0.2])
-	plt.plot(x2, conv3_5, label='P3_mean_load')
-	plt.plot(x2, conv1_5, label='P1_mean_load')
+	x2 = range(101,time-69+1+19)
+	mconv3_20 = np.convolve(p3_aug_mean,np.full ((20),0.05))
+	mconv1_20 = np.convolve(p1_aug_mean,np.full ((20),0.05))
+	plt.plot(x2, mconv3_20[100:950], label='P3_mean_load')
+	plt.plot(x2, mconv1_20[100:950], label='P1_mean_load')
 	plt.xlabel('Time(sec)' , fontsize = 12)
 	plt.ylabel('Mean Load(bps)', fontsize = 12)
-	plt.ylim(ymax = max(conv3_5)+10, ymin = 0)
-	plt.legend(loc=1)
+	plt.ylim(ymax = max(mconv3_20)+50, ymin = 0)
+	plt.legend(loc=4)
 
 	plt.subplot(313) 
-	x3 = range(1,time+1+9) 
-	sconv3_10 = np.convolve(p3_aug_std, [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1])
-	sconv1_10 = np.convolve(p1_aug_std, [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1])
-	plt.plot(x3, sconv3_10, label='P3_load_std')
-	plt.plot(x3, sconv1_10, label='P1_load_std')
+	x3 = range(101,time-69+1+19) 
+	sconv3_20 = np.convolve(p3_aug_std,np.full ((20),0.05))
+	sconv1_20 = np.convolve(p1_aug_std,np.full ((20),0.05))
+	plt.plot(x3, sconv3_20[100:950], label='P3_load_std')
+	plt.plot(x3, sconv1_20[100:950], label='P1_load_std')
 	plt.xlabel('Time(sec)' , fontsize = 12)
 	plt.ylabel('Standard Deviation', fontsize = 12)
-	plt.ylim(ymax = max(sconv1_10)+10, ymin = 0)
-	plt.legend(loc=1)
+	plt.ylim(ymax = max(sconv1_20)+50, ymin = 0)
+	plt.legend(loc=4)
 
+	plt.figure(2, figsize=(8,8))
+	#sns.boxplot(data = [ np.asarray(p3_packet_means) , np.asarray(p1_packet_means)])
+	sns.boxplot(data = [ p3_packet_means[100:] , p1_packet_means[100:]])
+	plt.xlabel('Path Order' , fontsize = 12)
+	plt.ylabel('Avg Delivery Time(msec)', fontsize = 12)
 	plt.show()
 
 main()

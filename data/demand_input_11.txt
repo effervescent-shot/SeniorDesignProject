@@ -1,0 +1,11 @@
+10
+0 prefix4;prefix5;prefix9;prefix11;prefix13;prefix10;prefix12;prefix7;prefix0
+1 prefix1;prefix6
+2 prefix8;prefix7;prefix11;prefix3;prefix2;prefix5;prefix1;prefix0;prefix6;prefix14
+3 prefix7;prefix0;prefix9;prefix11;prefix12;prefix13;prefix10;prefix14;prefix6;prefix4
+4 prefix4;prefix9;prefix6;prefix10;prefix3;prefix11;prefix7;prefix12;prefix1;prefix8
+5 prefix11;prefix3
+6 prefix3;prefix10;prefix14;prefix12;prefix5;prefix2;prefix11;prefix13;prefix6;prefix8
+7 prefix8;prefix13;prefix5;prefix6;prefix12;prefix11;prefix9;prefix7;prefix10;prefix2;prefix3;prefix0;prefix4;prefix14
+8 prefix15;prefix3;prefix2;prefix4;prefix11;prefix8;prefix0;prefix9;prefix5;prefix6;prefix7;prefix12;prefix13
+9 prefix2;prefix12;prefix4;prefix11;prefix14;prefix7;prefix9;prefix10;prefix6;prefix13
