@@ -27,7 +27,7 @@ public class Simulator {
     public static PriorityQueue<Event> eventQueue = new PriorityQueue<>();
 
     private static double MAX_SIM_TIME;
-    private static double SimTime;  //milisecond
+    private static long SimTime;  //milisecond
 
     private static Random randomTime;
     private static Random randomNode;
@@ -121,8 +121,9 @@ public class Simulator {
         return (int)Math.floor(0+(networkPrefixes.size()-0)*randomPrefix.nextDouble())+1;
     }
 
-    public double getRandomStartTime(){
-        return Math.floor(0+(MAX_SIM_TIME-0)*randomTime.nextDouble());
+    public long getRandomStartTime(){
+        //return (long)Math.floor(0+(MAX_SIM_TIME-0)*randomTime.nextDouble());
+        return (long) Math.min(MAX_SIM_TIME, randomTime.nextLong());
     }
 
 
@@ -160,7 +161,7 @@ public class Simulator {
 
     }
 
-    public void init(int nodeID,double time, Prefix prefix){
+    public void init(int nodeID,long time, Prefix prefix){
         Init_Interest_Data_Event e = new Init_Interest_Data_Event();
         e.setTime(time);
         e.setPrefix(prefix);

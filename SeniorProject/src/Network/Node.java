@@ -23,7 +23,7 @@ public class Node {
     ArrayList<String> servedPrefixes;
     ArrayList<String> demandedPrefixes;
     private Map<Link,Queue<Event>> sendBuffers;
-    private Map<Link,Double> sendBufferTime;
+    private Map<Link,Long> sendBufferTime;
 
     private Map<Link,Queue<Event>> receiveBuffers;
 
@@ -119,7 +119,7 @@ public class Node {
         if(eventType == EventType.SEND_INTEREST) {
             Send_Receive_Event event = (Send_Receive_Event) sendBuffers.get(link).poll();
             if(event!=null) {
-                double delay = calculateDelay(link, event); //this yield second we want milisecond
+                long delay = calculateDelay(link, event); //this yield second we want milisecond
                 event.setEventType(EventType.RECEIVE_INTEREST); // turn the event into receive event
                 event.getLink().augmentLoad(event.getPacket().getPacketSize()); // update the link load
                 event.setTime(event.getTime() + delay);  // set receive time
@@ -132,7 +132,7 @@ public class Node {
         if(eventType == EventType.SEND_DATA) {
             Send_Receive_Event event = (Send_Receive_Event) sendBuffers.get(link).poll();
             if(event!=null){
-               double delay = calculateDelay(link, event);
+               long delay = calculateDelay(link, event);
                event.setEventType(EventType.RECEIVE_DATA);
                event.getLink().augmentLoad(event.getPacket().getPacketSize());
                event.setTime(event.getTime()+delay);
@@ -189,7 +189,7 @@ public class Node {
 
 
 
-    public void Initialize_Interest(double time, Prefix prefix) {
+    public void Initialize_Interest(long time, Prefix prefix) {
         //System.out.println("Node: "+ this.ID + " at: " + time + " Prefix: " +  prefix.getPrefixName() + " size: "+prefix.getData().getSize());
         //System.out.println(Arrays.toString(servedPrefixes.toArray()));
         if(servedPrefixes.contains(prefix.getPrefixName())) {
@@ -257,7 +257,7 @@ public class Node {
     }
 
 
-    private void getNextFromBufferQueue(Link link, double time) {
+    private void getNextFromBufferQueue(Link link, long time) {
         //if buffer is not empyty then add delay to each element
         if(!sendBuffers.get(link).isEmpty()){
             Event e = sendBuffers.get(link).peek();
@@ -266,11 +266,11 @@ public class Node {
         }
     }
 
-    private double calculateDelay (Link link, Event e) {
-        return 1000 * ((Send_Receive_Event)e).getPacket().getPacketSize()*8 / link.getCapacity();
+    private long calculateDelay (Link link, Event e) {
+        return (long)1000 * ((Send_Receive_Event)e).getPacket().getPacketSize()*8 / link.getCapacity();
     }
 
-    public void Initialize_Data(double time, Prefix prefix, int destNodeID, SimPath path) {
+    public void Initialize_Data(long time, Prefix prefix, int destNodeID, SimPath path) {
         SimPath reversePath = new SimPath(path); ///pathi kopyala koy her zaman
         reversePath.setReverse();
 
@@ -295,7 +295,7 @@ public class Node {
         receiveBuffers.get(link).add(event);
     }
 
-    private void createInterestSendEvents(double time, Prefix prefix, int destNodeID, int numOfEvents, SimPath path){
+    private void createInterestSendEvents(long time, Prefix prefix, int destNodeID, int numOfEvents, SimPath path){
         if(destNodeID == this.ID){
             return;
         } else {

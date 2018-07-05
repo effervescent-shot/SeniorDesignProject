@@ -13,7 +13,7 @@ public class Send_Receive_Event extends Event{
     private Packet packet;
     private Link link;
 
-    public Send_Receive_Event(double time, EventType eventType, int from, int to, Packet pack) {
+    public Send_Receive_Event(long time, EventType eventType, int from, int to, Packet pack) {
         super(time, eventType);
         this.from = from;
         this.to = to;

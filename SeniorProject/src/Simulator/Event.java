@@ -4,7 +4,7 @@ import Enums.EventType;
 import Network.Packet;
 
 public class Event implements Comparable {
-    private double time;//In milisecond
+    private long time;//In milisecond
     private EventType eventType;
 
 
@@ -12,7 +12,7 @@ public class Event implements Comparable {
 
     }
 
-    public Event(double time,EventType eventType){
+    public Event(long time,EventType eventType){
         this.time=time;
         this.eventType=eventType;
     }
@@ -24,11 +24,11 @@ public class Event implements Comparable {
         else   return -1;
     }
 
-    public double getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(double time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
