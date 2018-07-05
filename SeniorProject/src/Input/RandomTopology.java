@@ -2,10 +2,12 @@ package Input;
 
 import Simulator.Main;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Scanner;
 
 public class RandomTopology {
     static String fileSuffix;
@@ -42,11 +44,14 @@ public class RandomTopology {
             }
             writer.close();
             writer2.close();
+
         }catch (Exception e){
 
         }
 
     }
+
+
     public static void randomPrefixGenerator(int prefixCount){
 
         try{

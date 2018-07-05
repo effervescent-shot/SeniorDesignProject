@@ -33,7 +33,9 @@ public class DemandReader {
 
             for (int i = 0; i<n; i++) {
                 nodeID = reader.nextInt();
+                //System.out.println("DNode:"+nodeID);
                 prefix = reader.next();
+                //System.out.println("Dprefix:"+prefix);
                 prefixes = prefix.split(";");
                 ArrayList<String> tmp = new ArrayList<String>();
                 for (int j = 0; j < prefixes.length; j++) {

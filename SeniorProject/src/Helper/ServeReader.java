@@ -35,7 +35,10 @@ public class ServeReader {
 
             for (int i = 0; i<n; i++) {
                 nodeID = reader.nextInt();
+                //System.out.println("SNode:"+nodeID);
                 prefix = reader.next();
+                //System.out.println("Sprefix:"+prefix);
+
                 prefixes = prefix.split(";");
                 ArrayList<String> tmp = new ArrayList<String>();
                 for (int j = 0; j < prefixes.length; j++) {

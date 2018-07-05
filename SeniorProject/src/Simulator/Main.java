@@ -4,37 +4,53 @@ import Input.RandomTopology;
 import kPath.Graph;
 import kPath.VariableGraph;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Main {
     public static String fileSuffix = "";
-    public static void main (String args[]) throws FileNotFoundException {
+    public static void main (String args[]) throws Exception {
 
+        /*int NodeCount = Integer.valueOf(args[1]);
+        int EdgeCount = Integer.valueOf(args[2]);
+        int PrefixCount = Integer.valueOf(args[3]);
+        long SimTime = Long.valueOf(args[4]);*/
 
-        //Boolean boo = Boolean.valueOf(args[1]);
-        boolean boo = false;
-        //boo = true;
-        if(boo){
-            //RandomTopology.randomGenerator(10,30,15);
+//        Boolean boo = Boolean.valueOf(args[1]);
+//        System.out.println(boo);
+
+        Simulator sim = new Simulator(1000); //milisecond
+        boolean check = true;
+        while (check) {
+            try {
+                //RandomTopology.randomGenerator(10, 30, 150);
+                init(sim);
+                check = false;
+            } catch (Exception e) {
+                RandomTopology.randomGenerator(10, 30, 150);
+                check = true;
+            }
         }
 
-        Simulator sim = new Simulator(1000000); //milisecond
-        TopologyReader tr = new TopologyReader("data/input"+fileSuffix+".txt",sim);
+
+
         Graph graph3 = new VariableGraph("data/ginput"+fileSuffix+".txt");
         Graph graph1 = new VariableGraph("data/ginput"+fileSuffix+".txt");
 
-        PrefixReader pr = new PrefixReader("data/prefix_input"+fileSuffix+".txt",sim);
-        ServeReader sr = new ServeReader("data/serve_input"+fileSuffix+".txt",sim);
-        DemandReader dr = new DemandReader("data/demand_input"+fileSuffix+".txt",sim);
+        path1Sim(sim, graph1);
 
-        if(boo) {
-            path3Sim(sim, graph3);
-        } else {
-            path1Sim(sim, graph1);
-        }
 
 
     }
+
+    public static void init(Simulator sim) throws Exception{
+        TopologyReader tr = new TopologyReader("data/input"+fileSuffix+".txt",sim);
+        PrefixReader pr = new PrefixReader("data/prefix_input"+fileSuffix+".txt",sim);
+        ServeReader sr = new ServeReader("data/serve_input"+fileSuffix+".txt",sim);
+        DemandReader dr = new DemandReader("data/demand_input"+fileSuffix+".txt",sim);
+    }
+
 
     public static void path3Sim(Simulator sim,Graph g3) throws FileNotFoundException {
         sim.buildPaths(g3,3);
@@ -49,4 +65,5 @@ public class Main {
         sim.runSimulation(g1, 1);
         sim.printLinkLoads("vis-data/load1"+fileSuffix+".csv", "vis-data/packet1"+fileSuffix+".csv");
     }
+
 }

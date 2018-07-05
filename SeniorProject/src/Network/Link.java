@@ -2,7 +2,7 @@ package Network;
 
 import java.util.ArrayList;
 
-public class Link {
+public class Link implements Comparable {
     private int ID;
     private Node firstNode;
     private Node secondNode;
@@ -116,4 +116,10 @@ public class Link {
     }
 
 
+    @Override
+    public int compareTo(Object o) {
+        if(this.capacity == ((Link)o).getCapacity()) return 0;
+        else if(this.capacity > ((Link)o).getCapacity()) return 1;
+        else   return -1;
+    }
 }

@@ -24,10 +24,10 @@ public class Node {
     ArrayList<String> demandedPrefixes;
     private Map<Link,Queue<Event>> sendBuffers;
     private Map<Link,Long> sendBufferTime;
-
     private Map<Link,Queue<Event>> receiveBuffers;
 
-    private double NodeTime = 0;
+    private long nodeLoad = 0;
+    private long NodeTime = 0;
 
     public Node (int ID) {
         this.ID = ID;
@@ -119,6 +119,7 @@ public class Node {
         if(eventType == EventType.SEND_INTEREST) {
             Send_Receive_Event event = (Send_Receive_Event) sendBuffers.get(link).poll();
             if(event!=null) {
+                nodeLoad += event.getPacket().getPacketSize();
                 long delay = calculateDelay(link, event); //this yield second we want milisecond
                 event.setEventType(EventType.RECEIVE_INTEREST); // turn the event into receive event
                 event.getLink().augmentLoad(event.getPacket().getPacketSize()); // update the link load
@@ -132,6 +133,7 @@ public class Node {
         if(eventType == EventType.SEND_DATA) {
             Send_Receive_Event event = (Send_Receive_Event) sendBuffers.get(link).poll();
             if(event!=null){
+               nodeLoad += event.getPacket().getPacketSize();
                long delay = calculateDelay(link, event);
                event.setEventType(EventType.RECEIVE_DATA);
                event.getLink().augmentLoad(event.getPacket().getPacketSize());
@@ -267,7 +269,7 @@ public class Node {
     }
 
     private long calculateDelay (Link link, Event e) {
-        return (long)1000 * ((Send_Receive_Event)e).getPacket().getPacketSize()*8 / link.getCapacity();
+        return (long)1000 * ((Send_Receive_Event)e).getPacket().getPacketSize()*8 / link.getCapacity(); //*1000 to turn it milisecond
     }
 
     public void Initialize_Data(long time, Prefix prefix, int destNodeID, SimPath path) {

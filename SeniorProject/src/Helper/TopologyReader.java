@@ -80,4 +80,17 @@ public class TopologyReader {
         }
 
     }
+
+    private static boolean check_connected() throws Exception {
+
+        return true;
+    }
+
+    private int Find() {
+        return 0;
+    }
+
+    private void Union() {
+
+    }
 }
