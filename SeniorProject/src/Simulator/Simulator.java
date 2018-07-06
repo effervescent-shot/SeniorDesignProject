@@ -50,10 +50,11 @@ public class Simulator {
         while(!eventQueue.isEmpty() && SimTime < MAX_SIM_TIME) {
             Event e = (Event)eventQueue.poll();
             SimTime = e.getTime();
+            //System.out.println(e.toString());
             //System.out.println(e.getEventType()+ " time: " + e.getTime());
             if(e.getEventType() == RUN_DIJKSTRA) {
                 //updateEdgeCosts(graph);
-                buildPaths(graph, pathDegree);
+                //buildPaths(graph, pathDegree);
             } else if(e.getEventType() == UPDATE_LOAD) {
                 for (Link l: networkLinks.values()) {
                     l.updateLoad();

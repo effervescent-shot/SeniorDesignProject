@@ -1,0 +1,16 @@
+15
+prefix1 512
+prefix2 2048
+prefix3 512
+prefix4 512
+prefix5 512
+prefix6 1024
+prefix7 512
+prefix8 2048
+prefix9 2048
+prefix10 512
+prefix11 1024
+prefix12 2048
+prefix13 512
+prefix14 2048
+prefix15 1024
