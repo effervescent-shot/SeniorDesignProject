@@ -66,7 +66,7 @@ public class Simulator {
         /*for ( Packet p: allPackets) {
             System.out.println(p);
         }*/
-        System.out.println(allPackets.size());
+        System.out.println(allPackets.size() + "vuuu");
     }
 
     public static void buildPaths(Graph graph, int pathDegree) {
@@ -120,8 +120,8 @@ public class Simulator {
     }
 
     public long getRandomStartTime(){
-        //return (long)Math.floor(0+(MAX_SIM_TIME-0)*randomTime.nextDouble());
-        return (long) Math.min(MAX_SIM_TIME, randomTime.nextLong());
+        return (long)Math.floor(0+(MAX_SIM_TIME-0)*randomTime.nextDouble());
+        //return (long) Math.min(MAX_SIM_TIME, randomTime.nextLong());
     }
 
 
@@ -177,7 +177,7 @@ public class Simulator {
         SimTime = 0;
     }
 
-    public void printLinkLoads(String loadFile, String packetFile ) throws FileNotFoundException {
+    public void printLinkLoads(String loadFile, String packetFile, String nodeFile ) throws FileNotFoundException {
 
         PrintWriter pw = new PrintWriter(new File(loadFile));
         StringBuilder sb;  //= new StringBuilder();
@@ -209,7 +209,7 @@ public class Simulator {
         PrintWriter pw2 = new PrintWriter(new File(packetFile));
         StringBuilder sb2;
         sb2 = new StringBuilder();
-        double d;
+        long d;
         for (int i = 0; i<allPackets.size()-1; i++) {
             d = (allPackets.get(i).getTerminationTime()- allPackets.get(i).getCreationTime());
             sb2.append(d);
@@ -219,6 +219,20 @@ public class Simulator {
         sb2.append(allPackets.get(allPackets.size()-1).getTerminationTime() - allPackets.get(allPackets.size()-1).getCreationTime());
         pw2.write(sb2.toString());
         pw2.close();
+
+
+
+        PrintWriter pw3 = new PrintWriter(new File(nodeFile));
+        StringBuilder sb3;
+        sb3 = new StringBuilder();
+        Object[] list = networkNodes.values().toArray();
+        for (int i =0; i< list.length-1; i++) {
+            sb3.append(((Node)list[i]).getNodeLoad());
+            sb3.append(',');
+        }
+        sb3.append(((Node)list[list.length-1]).getNodeLoad());
+        pw3.write(sb3.toString());
+        pw3.close();
 
         System.out.println("done!");
     }

@@ -68,6 +68,10 @@ public class Node {
         this.type = type;
     }
 
+    public long getNodeLoad() { return nodeLoad; }
+
+    public void setNodeLoad(long nodeLoad) { this.nodeLoad = nodeLoad; }
+
     public FIB getFib() {
         return fib;
     }

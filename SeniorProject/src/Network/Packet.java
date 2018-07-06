@@ -2,7 +2,6 @@ package Network;
 
 import Enums.PacketType;
 import Helper.SimPath;
-import ICN.Data;
 import ICN.Prefix;
 import Simulator.Simulator;
 
@@ -18,16 +17,16 @@ public class Packet {
     private SimPath simPath;
     private PacketType packetType;
 
-    private double CreationTime;
-    private double TerminationTime;
+    private long CreationTime;
+    private long TerminationTime;
 
-    public Packet (double creationTime) {
+    public Packet (long creationTime) {
        this.ID = sID;
        this.sID++;
        this.CreationTime = creationTime;
     }
 
-    public Packet (double creationTime, PacketType packetType, SimPath path) {
+    public Packet (long creationTime, PacketType packetType, SimPath path) {
         this.ID = sID;
         this.sID++;
         this.simPath = path;
@@ -90,16 +89,16 @@ public class Packet {
         return getDataPacketSize();
     }
 
-    public void terminatePacket(double terminationTime) {
+    public void terminatePacket(long terminationTime) {
         this.TerminationTime = terminationTime;
         Simulator.allPackets.add(this);
     }
 
-    public double getCreationTime() {
+    public long getCreationTime() {
         return CreationTime;
     }
 
-    public double getTerminationTime() {
+    public long getTerminationTime() {
         return TerminationTime;
     }
 

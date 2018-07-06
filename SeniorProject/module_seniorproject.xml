@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_seniorproject" default="compile.module.seniorproject">
+  <dirname property="module.seniorproject.basedir" file="${ant.file.module_seniorproject}"/>
+  
+  <property name="module.jdk.home.seniorproject" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.seniorproject" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.seniorproject" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.seniorproject" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="seniorproject.output.dir" value="${module.seniorproject.basedir}/../out/production/SeniorProject"/>
+  <property name="seniorproject.testoutput.dir" value="${module.seniorproject.basedir}/../out/test/SeniorProject"/>
+  
+  <path id="seniorproject.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="seniorproject.module.production.classpath">
+    <path refid="${module.jdk.classpath.seniorproject}"/>
+  </path>
+  
+  <path id="seniorproject.runtime.production.module.classpath">
+    <pathelement location="${seniorproject.output.dir}"/>
+  </path>
+  
+  <path id="seniorproject.module.classpath">
+    <path refid="${module.jdk.classpath.seniorproject}"/>
+    <pathelement location="${seniorproject.output.dir}"/>
+  </path>
+  
+  <path id="seniorproject.runtime.module.classpath">
+    <pathelement location="${seniorproject.testoutput.dir}"/>
+    <pathelement location="${seniorproject.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.seniorproject">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.seniorproject">
+    <patternset refid="excluded.from.module.seniorproject"/>
+  </patternset>
+  
+  <path id="seniorproject.module.sourcepath">
+    <dirset dir="${module.seniorproject.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.seniorproject" depends="compile.module.seniorproject.production,compile.module.seniorproject.tests" description="Compile module SeniorProject"/>
+  
+  <target name="compile.module.seniorproject.production" depends="register.custom.compilers" description="Compile module SeniorProject; production classes">
+    <mkdir dir="${seniorproject.output.dir}"/>
+    <javac2 destdir="${seniorproject.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.seniorproject}/javac">
+      <compilerarg line="${compiler.args.seniorproject}"/>
+      <bootclasspath refid="seniorproject.module.bootclasspath"/>
+      <classpath refid="seniorproject.module.production.classpath"/>
+      <src refid="seniorproject.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.seniorproject"/>
+    </javac2>
+    
+    <copy todir="${seniorproject.output.dir}">
+      <fileset dir="${module.seniorproject.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.seniorproject.tests" depends="register.custom.compilers,compile.module.seniorproject.production" description="compile module SeniorProject; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.seniorproject" description="cleanup module">
+    <delete dir="${seniorproject.output.dir}"/>
+    <delete dir="${seniorproject.testoutput.dir}"/>
+  </target>
+</project>

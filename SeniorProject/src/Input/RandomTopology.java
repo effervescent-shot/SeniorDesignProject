@@ -1,6 +1,6 @@
 package Input;
 
-import Simulator.Main;
+import Simulator.RunSimulator;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class RandomTopology {
     static String fileSuffix;
     public static void randomGenerator(int nodeCount,int edgeCount,int prefixCount){
-        fileSuffix=Main.fileSuffix;
+        fileSuffix=RunSimulator.fileSuffix;
         randomTopologyGenerator(nodeCount,edgeCount);
         randomPrefixGenerator(prefixCount);
         randomServePrefixGenerator(nodeCount,prefixCount);
