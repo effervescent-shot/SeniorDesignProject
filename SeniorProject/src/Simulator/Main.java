@@ -15,7 +15,8 @@ public class Main {
         /*int NodeCount = Integer.valueOf(args[1]);
         int EdgeCount = Integer.valueOf(args[2]);
         int PrefixCount = Integer.valueOf(args[3]);
-        long SimTime = Long.valueOf(args[4]);*/
+        long SimTime = Long.valueOf(args[4]);
+        String fileSuffix = args[5];*/
 
 //        Boolean boo = Boolean.valueOf(args[1]);
 //        System.out.println(boo);
