@@ -56,7 +56,7 @@ public class RunSimulator {
 
             check = true;
         //}
-        
+
         Graph graph0 = new VariableGraph("data/ginput"+fileSuffix+".txt");
 
 

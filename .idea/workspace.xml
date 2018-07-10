@@ -34,7 +34,7 @@
         <entry file="file://$PROJECT_DIR$/SeniorProject/src/Simulator/RunSimulator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="605">
-              <caret line="58" column="8" lean-forward="false" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
+              <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -154,7 +154,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="960" />
     <option name="y" value="17" />
     <option name="width" value="846" />
@@ -468,12 +468,12 @@
       <workItem from="1527731196878" duration="582000" />
       <workItem from="1530523389969" duration="4000" />
       <workItem from="1530774474903" duration="13918000" />
-      <workItem from="1530883117816" duration="7266000" />
+      <workItem from="1530883117816" duration="7269000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="145142000" />
+    <option name="totallyTimeSpent" value="145145000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -485,8 +485,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="960" y="17" width="1857" height="1092" extended-state="6" />
-    <editor active="true" />
+    <frame x="960" y="17" width="1857" height="1092" extended-state="7" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3291536" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -964,7 +963,7 @@
     <entry file="file://$PROJECT_DIR$/SeniorProject/src/Simulator/RunSimulator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="605">
-          <caret line="58" column="8" lean-forward="false" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
+          <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
