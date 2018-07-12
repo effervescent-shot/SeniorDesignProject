@@ -28,7 +28,7 @@ public class RunSimulator {
         int EdgeCount = 30;
         int PrefixCount = 15;
         long MaxSimTime = 10000;  //milisecond
-
+        
         //Boolean boo = Boolean.valueOf(args[1]);
 
         Simulator sim = new Simulator(MaxSimTime);
