@@ -1,19 +1,21 @@
 package Simulator;
 import Enums.EventType;
+import Helper.Pair;
+import Helper.SimPath;
 import ICN.Prefix;
-import Network.*;
-import Helper.*;
+import Network.Link;
+import Network.Node;
+import Network.Packet;
 import kPath.Graph;
 import kPath.Path;
-
 import kPath.shortestpaths.YenTopKShortestPathsAlg;
-
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.*;
+
 import static Enums.EventType.RUN_DIJKSTRA;
 import static Enums.EventType.UPDATE_LOAD;
 
@@ -119,6 +121,11 @@ public class Simulator {
     public int getRandomPrefixID(){
         return (int)Math.floor(0+(networkPrefixes.size()-0)*randomPrefix.nextDouble())+1;
     }
+
+    private int PoissonDist(Double lamda) {
+        return -1;
+    }
+
 
     public long getRandomStartTime(){
         return (long)Math.floor(0+(MAX_SIM_TIME-0)*randomTime.nextDouble());
