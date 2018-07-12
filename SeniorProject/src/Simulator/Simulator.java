@@ -45,8 +45,8 @@ public class Simulator {
 
     public void runSimulation(Graph graph, int pathDegree){
         //buildPaths(graph, pathDegree);
-
         ///////// initialize initial interests //////////
+
         //
         while(!eventQueue.isEmpty() && SimTime < MAX_SIM_TIME) {
             Event e = (Event)eventQueue.poll();

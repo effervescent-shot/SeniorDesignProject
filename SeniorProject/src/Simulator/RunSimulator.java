@@ -1,10 +1,13 @@
 package Simulator;
 import Enums.RoutingType;
-import Helper.*;
-import Input.RandomTopology;
+import Helper.DemandReader;
+import Helper.PrefixReader;
+import Helper.ServeReader;
+import Helper.TopologyReader;
 import Network.Packet;
 import kPath.Graph;
 import kPath.VariableGraph;
+
 import java.io.FileNotFoundException;
 
 
@@ -20,7 +23,7 @@ public class RunSimulator {
 
 
     public static void main (String args[]) throws Exception {
-
+        //colt.src.main.java.cern.jet.random.Poisson
         int NodeCount = 10;   //can be taken as argument
         int EdgeCount = 30;
         int PrefixCount = 15;
@@ -29,6 +32,7 @@ public class RunSimulator {
         //Boolean boo = Boolean.valueOf(args[1]);
 
         Simulator sim = new Simulator(MaxSimTime);
+
 
 
         boolean check = true;
