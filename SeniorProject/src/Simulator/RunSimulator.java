@@ -1,17 +1,12 @@
 package Simulator;
+import Enums.RoutingType;
 import Helper.*;
-import ICN.Prefix;
 import Input.RandomTopology;
-import Network.Link;
-import Network.Node;
 import Network.Packet;
 import kPath.Graph;
 import kPath.VariableGraph;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+
 
 public class RunSimulator {
 
@@ -36,13 +31,14 @@ public class RunSimulator {
 
         Simulator sim = new Simulator(MaxSimTime);
 
+
         boolean check = true;
 
-        //for(int i = 1; i<=2; i++) {
+        //LogNormalDistribution logNormalDistribution = new LogNormalDistribution(3.5, 5.0);
 
-            while (check) {
+        while (check) {
                 try {
-                    fileSuffix ="_"+2;
+                    fileSuffix ="_"+1;
                     RandomTopology.randomGenerator(NodeCount,EdgeCount,PrefixCount);
                     init(sim);
                     Graph graph1 = new VariableGraph("data/ginput"+fileSuffix+".txt");
@@ -54,8 +50,6 @@ public class RunSimulator {
                 }
             }
 
-            check = true;
-        //}
 
         Graph graph0 = new VariableGraph("data/ginput"+fileSuffix+".txt");
 
@@ -77,6 +71,7 @@ public class RunSimulator {
 
 
     public static void path3Sim(Simulator sim,Graph g3) throws FileNotFoundException {
+        Packet.setRoutingType(RoutingType.SOURCE_ROUTING_3);
         sim.buildPaths(g3,3);
         sim.initialization(numEvents,timeSeed,nodeSeed,prefixSeed);
         sim.runSimulation(g3, 3);
@@ -85,6 +80,7 @@ public class RunSimulator {
     }
 
     public static void path1Sim(Simulator sim,Graph g1) throws FileNotFoundException {
+        Packet.setRoutingType(RoutingType.SOURCE_ROUTING_1);
         sim.buildPaths(g1,1);
         sim.initialization(numEvents,timeSeed,nodeSeed,prefixSeed);
         sim.runSimulation(g1, 1);
@@ -93,7 +89,7 @@ public class RunSimulator {
     }
 
     public static void LSCRSim(Simulator sim, Graph g0) throws  FileNotFoundException {
-
+        Packet.setRoutingType(RoutingType.LSCR);
     }
 
 }

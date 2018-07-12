@@ -6,6 +6,7 @@ import Enums.PacketType;
 import Helper.Pair;
 import Helper.SimPath;
 import ICN.FIB;
+import ICN.FIB_LSCR;
 import ICN.Prefix;
 import ICN.RIB;
 import Simulator.Event;
@@ -20,6 +21,7 @@ public class Node {
     private NodeType type;
     private FIB fib;
     private RIB rib;
+    private FIB_LSCR fib_lscr;
     ArrayList<String> servedPrefixes;
     ArrayList<String> demandedPrefixes;
     private Map<Link,Queue<Event>> sendBuffers;
@@ -33,6 +35,7 @@ public class Node {
         this.ID = ID;
         this.fib = new FIB();
         this.rib = new RIB();
+        this.fib_lscr = new FIB_LSCR();
         servedPrefixes=new ArrayList<String>();
         demandedPrefixes = new ArrayList<String>();
         sendBuffers = new HashMap<Link,Queue<Event>>();
@@ -45,6 +48,7 @@ public class Node {
         this.name = name;
         this.fib = new FIB();
         this.rib = new RIB();
+        this.fib_lscr = new FIB_LSCR();
         servedPrefixes=new ArrayList<String>();
         demandedPrefixes = new ArrayList<String>();
         sendBuffers = new HashMap<Link,Queue<Event>>();
@@ -88,8 +92,19 @@ public class Node {
         this.rib = rib;
     }
 
-    public void setFibRow(int nodeID, SimPath path1, SimPath path2, SimPath path3) {
-        fib.addFIBEntry(nodeID, this.fib.createFIBRow(path1,path2,path3));
+    public FIB_LSCR getFib_lscr() {
+        return fib_lscr;
+    }
+
+    public void setFib_lscr(FIB_LSCR fib_lscr) {
+        this.fib_lscr = fib_lscr;
+    }
+
+    public void setFibRow(int targetNodeID, SimPath path1, SimPath path2, SimPath path3) {
+        fib.addFIBEntry(targetNodeID, this.fib.createFIBRow(path1,path2,path3));
+        fib_lscr.setNextHop(targetNodeID,path1.nextNodeID(this.ID));
+        /*System.out.println("this is node:" + this.ID + " and target node is:" + targetNodeID +
+                            " simPath1 = " + path1.toString() + " and the next hop " +  path1.nextNodeID(this.ID));*/
     }
 
     public String getName() {
@@ -188,8 +203,6 @@ public class Node {
             }
 
         }
-
-
 
     }
 

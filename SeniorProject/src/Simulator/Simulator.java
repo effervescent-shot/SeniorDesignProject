@@ -24,6 +24,7 @@ public class Simulator {
     public static ArrayList<Packet> allPackets = new ArrayList<>();
     public static PriorityQueue<Event> eventQueue = new PriorityQueue<>();
 
+
     private static long MAX_SIM_TIME;
     private static long SimTime;  //milisecond
 

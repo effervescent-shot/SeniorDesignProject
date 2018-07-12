@@ -1,6 +1,7 @@
 package Network;
 
 import Enums.PacketType;
+import Enums.RoutingType;
 import Helper.SimPath;
 import ICN.Prefix;
 import Simulator.Simulator;
@@ -8,6 +9,7 @@ import Simulator.Simulator;
 public class Packet {
     private static final int InterestPacketSize = 1; //MB
     private static final int DataPacketSize = 8; //MB
+    private static RoutingType routingType;
 
     private static long sID = 1;
     private long ID;
@@ -32,6 +34,14 @@ public class Packet {
         this.simPath = path;
         this.packetType = packetType;
         this.CreationTime = creationTime;
+    }
+
+    public static RoutingType getRoutingType() {
+        return routingType;
+    }
+
+    public static void setRoutingType(RoutingType routingType) {
+        Packet.routingType = routingType;
     }
 
     public long getID() {
