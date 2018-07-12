@@ -28,6 +28,13 @@ public class Packet {
        this.CreationTime = creationTime;
     }
 
+    public Packet (long creationTime, PacketType packetType) {
+        this.ID = sID;
+        this.sID++;
+        this.packetType = packetType;
+        this.CreationTime = creationTime;
+    }
+
     public Packet (long creationTime, PacketType packetType, SimPath path) {
         this.ID = sID;
         this.sID++;

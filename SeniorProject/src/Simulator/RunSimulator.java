@@ -15,7 +15,7 @@ public class RunSimulator {
     public static final long nodeSeed = 200000041;
     public static final long prefixSeed = 300000071;
 
-    public static final int numEvents = 100;
+    public static final int numEvents = 10000;
 
 
 
@@ -27,7 +27,6 @@ public class RunSimulator {
         long MaxSimTime = 10000;  //milisecond
 
         //Boolean boo = Boolean.valueOf(args[1]);
-        System.out.println("Houston");
 
         Simulator sim = new Simulator(MaxSimTime);
 
@@ -39,10 +38,12 @@ public class RunSimulator {
         while (check) {
                 try {
                     fileSuffix ="_"+1;
-                    RandomTopology.randomGenerator(NodeCount,EdgeCount,PrefixCount);
+                    //RandomTopology.randomGenerator(NodeCount,EdgeCount,PrefixCount);
                     init(sim);
-                    Graph graph1 = new VariableGraph("data/ginput"+fileSuffix+".txt");
-                    path1Sim(sim,graph1);
+                    Graph graph = new VariableGraph("data/ginput"+fileSuffix+".txt");
+                    //path3Sim(sim,graph);
+                    //path1Sim(sim,graph);
+                    LSCRSim(sim,graph);
                     check = false;
                 } catch (Exception e) {
                     check = true;
@@ -90,6 +91,11 @@ public class RunSimulator {
 
     public static void LSCRSim(Simulator sim, Graph g0) throws  FileNotFoundException {
         Packet.setRoutingType(RoutingType.LSCR);
+        sim.buildPaths(g0,1);
+        sim.initialization(numEvents,timeSeed,nodeSeed,prefixSeed);
+        sim.runSimulation(g0, 1);
+        sim.printLinkLoads("vis-data/load_LSCR"+fileSuffix+".csv", "vis-data/packet_LSCR"+fileSuffix+".csv",
+                "vis-data/node_LSCR"+fileSuffix+".csv");
     }
 
 }

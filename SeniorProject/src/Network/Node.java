@@ -3,6 +3,7 @@ package Network;
 import Enums.EventType;
 import Enums.NodeType;
 import Enums.PacketType;
+import Enums.RoutingType;
 import Helper.Pair;
 import Helper.SimPath;
 import ICN.FIB;
@@ -184,8 +185,16 @@ public class Node {
                 }
         } else {
             ///   if this is not the destination //////
+            int nextHopID = -1;  //TODO::merge those somebitch assignments
+
+            if(Packet.getRoutingType() != RoutingType.LSCR) {
+                nextHopID = e.getPacket().getSimPath().nextNodeID(this.ID);
+            } else {
+                nextHopID = fib_lscr.getNextHop(e.getPacket().getDestinationNodeID());
+            }
+
             if(e.getEventType() == EventType.RECEIVE_INTEREST) {
-                int nextHopID = e.getPacket().getSimPath().nextNodeID(this.ID);
+
                 e.setEventType(EventType.SEND_INTEREST);
                 e.setLink(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID)));
                 e.setFrom(this.ID);
@@ -194,7 +203,6 @@ public class Node {
             }
             /////    if data received
             else if(e.getEventType() == EventType.RECEIVE_DATA) {
-                int nextHopID = e.getPacket().getSimPath().nextNodeID(this.ID);
                 e.setEventType(EventType.SEND_DATA);
                 e.setLink(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID)));
                 e.setFrom(this.ID);
@@ -275,7 +283,6 @@ public class Node {
         }
     }
 
-
     private void getNextFromBufferQueue(Link link, long time) {
         //if buffer is not empyty then add delay to each element
         if(!sendBuffers.get(link).isEmpty()){
@@ -290,25 +297,39 @@ public class Node {
     }
 
     public void Initialize_Data(long time, Prefix prefix, int destNodeID, SimPath path) {
-        SimPath reversePath = new SimPath(path); ///pathi kopyala koy her zaman
-        reversePath.setReverse();
 
-        Packet packet = new Packet(time, PacketType.DATA_PACKET, reversePath);  /// random service time eklenebilir
-        packet.setSourceNodeID(this.ID);   ///   TODO:: put all those variables in an initialization method or make a new constructor for Packet
-        packet.setDestinationNodeID(destNodeID);
-        packet.setPrefix(prefix);
+        if(Packet.getRoutingType() == RoutingType.LSCR) {
+            Packet packet = new Packet(time, PacketType.DATA_PACKET);
+            packet.setSourceNodeID(this.ID);
+            packet.setDestinationNodeID(destNodeID);
+            packet.setPrefix(prefix);
 
-        int nextHopID = reversePath.nextNodeID(this.ID);
-        Event sendEvent = new Send_Receive_Event(time, EventType.SEND_DATA, this.ID, nextHopID,packet);
+            int nextHopID = fib_lscr.getNextHop(destNodeID);
+            Event sendEvent = new Send_Receive_Event(time, EventType.SEND_DATA, this.ID, nextHopID,packet);
+            addToSendBuffer(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID)),sendEvent);
 
-        addToSendBuffer(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID)),sendEvent);
+        } else {
+            SimPath reversePath = new SimPath(path); ///pathi kopyala koy her zaman
+            reversePath.setReverse();
+
+            Packet packet = new Packet(time, PacketType.DATA_PACKET, reversePath);  /// random service time eklenebilir
+            packet.setSourceNodeID(this.ID);   ///   TODO:: put all those variables in an initialization method or make a new constructor for Packet
+            packet.setDestinationNodeID(destNodeID);
+            packet.setPrefix(prefix);
+
+            int nextHopID = reversePath.nextNodeID(this.ID);
+            Event sendEvent = new Send_Receive_Event(time, EventType.SEND_DATA, this.ID, nextHopID,packet);
+
+            addToSendBuffer(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID)),sendEvent);
+        }
+
+
     }
 
     public void createLinkBuffers (Link link1, Link link2) {
         sendBuffers.put(link1, new PriorityQueue<>());
         receiveBuffers.put(link2, new PriorityQueue<>());  // ATTENTION!!! :: receiveBuffers have reverse links
     }
-
 
     public void addToReceiveBuffer(Link link, Event event) {
         receiveBuffers.get(link).add(event);
@@ -317,6 +338,19 @@ public class Node {
     private void createInterestSendEvents(long time, Prefix prefix, int destNodeID, int numOfEvents, SimPath path){
         if(destNodeID == this.ID){
             return;
+        } else if (Packet.getRoutingType() == RoutingType.LSCR) {
+
+            for(int i = 0 ; i< numOfEvents ; i++) {
+                int nextHopID = fib_lscr.getNextHop(destNodeID);
+
+                Packet packet = new Packet(time, PacketType.INTEREST_PACKET);
+                packet.setSourceNodeID(this.ID);
+                packet.setDestinationNodeID(destNodeID);
+                packet.setPrefix(prefix);
+
+                Event sendEvent = new Send_Receive_Event(time, EventType.SEND_INTEREST, this.ID, nextHopID,packet);
+                addToSendBuffer(Simulator.networkLinks.get(new Pair<>(this.ID, nextHopID)), sendEvent);
+            }
         } else {
             //System.out.println("At time: " + time + " " +prefix.getPrefixName() +  " from " + destNodeID + " # of events " + numOfEvents +" " + path.toString());
 
@@ -333,7 +367,6 @@ public class Node {
             }
         }
     }
-
 
     @Override
     public boolean equals(Object o) {

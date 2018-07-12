@@ -67,7 +67,7 @@ public class Simulator {
         /*for ( Packet p: allPackets) {
             System.out.println(p);
         }*/
-        System.out.println(allPackets.size() + "vuuu");
+        System.out.println(allPackets.size());
     }
 
     public static void buildPaths(Graph graph, int pathDegree) {
