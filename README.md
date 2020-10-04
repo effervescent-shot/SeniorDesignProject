@@ -1,6 +1,6 @@
 # SeniorDesignProject
 
-This repositiry contains our work for bachelor thesis submitted to Bogazici University Computer Engineering depaertment in conformity with the requirements for the degree of
+This repositiry contains our work for our bachelor thesis submitted to Bogazici University Computer Engineering department in conformity with the requirements for the degree of
 Bachelor of Science
 
 ## Abstract
@@ -11,11 +11,11 @@ Information-Centric Networking is still an incomplete paradigm which introduces 
 
 If you find this code usefull, please cite
 
-'''
+```
 @article{yuceturk2020load,
   title={Load Balancing and Mutisource Routing in Information-Centric-Networking},
   author={Yuceturk, Nihal Ezgi and Candan, Kutay},
   journal={arXiv preprint arXiv:2009.12908},
   year={2020}
 }
-'''
+```

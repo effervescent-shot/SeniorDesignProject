@@ -139,3 +139,5 @@ idea/
 # 
 _linux/
 ._linux/
+metadata/
+.metadata/
