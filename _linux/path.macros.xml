@@ -1,6 +1,0 @@
-<application>
-  <component name="PathMacrosImpl">
-    <macro name="MAVEN_REPOSITORY" value="/home/ezgi/.m2/repository" />
-    <macro name="KOTLIN_BUNDLED" value="/home/ezgi/Downloads/idea-IU-173.4674.33/plugins/Kotlin/kotlinc" />
-  </component>
-</application>
